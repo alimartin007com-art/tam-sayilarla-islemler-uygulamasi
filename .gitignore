@@ -1,0 +1,18 @@
+# Firebase gizli yapılandırma dosyası
+firebase-config.js
+
+# Ortam değişkenleri
+.env
+.env.local
+.env.production
+
+# İşletim sistemi dosyaları
+Thumbs.db
+.DS_Store
+
+# IDE dosyaları
+.vscode/
+.idea/
+
+# Node modülleri (ileride kullanılırsa)
+node_modules/
