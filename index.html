@@ -1305,18 +1305,23 @@ html[data-theme='retro'] .modal-content {
     </div>
 </div>
 
+<!-- Harici Firebase Yapılandırma Dosyası (Güvenlik ve Git Koruması İçin) -->
+<script src="firebase-config.js"></script>
+
 <script>
   // --- FIREBASE YAPILANDIRMASI ---
-  // DİKKAT: Kendi Firebase yapılandırma bilgilerinizi buraya yapıştırın.
-  const firebaseConfig = {
-    apiKey: "AIzaSyCR2LWyzcoT2wPwGzS3oF47RnNx6LxZbHE",
-    authDomain: "eglenceli-matematik-oyun-f2396.firebaseapp.com",
-    databaseURL: "https://eglenceli-matematik-oyun-f2396-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "eglenceli-matematik-oyun-f2396",
-    storageBucket: "eglenceli-matematik-oyun-f2396.firebasestorage.app",
-    messagingSenderId: "803199070316",
-    appId: "1:803199070316:web:c56ce976770efee1b5e849",
-    measurementId: "G-E5NFXTYYT8"
+  // ⚠️ GÜVENLİK: Gerçek API anahtarları firebase-config.js dosyasında tutulur.
+  // O dosya .gitignore ile GitHub'a yüklenmez.
+  // Eğer firebase-config.js yüklüyse oradan, değilse yer tutuculardan alınır.
+  const firebaseConfig = (typeof FIREBASE_CONFIG !== 'undefined') ? FIREBASE_CONFIG : {
+    apiKey: "BURAYA_API_KEY_YAZIN",
+    authDomain: "BURAYA_AUTH_DOMAIN_YAZIN",
+    databaseURL: "BURAYA_DATABASE_URL_YAZIN",
+    projectId: "BURAYA_PROJECT_ID_YAZIN",
+    storageBucket: "BURAYA_STORAGE_BUCKET_YAZIN",
+    messagingSenderId: "BURAYA_SENDER_ID_YAZIN",
+    appId: "BURAYA_APP_ID_YAZIN",
+    measurementId: "BURAYA_MEASUREMENT_ID_YAZIN"
   };
 
   // Firebase başlatma
