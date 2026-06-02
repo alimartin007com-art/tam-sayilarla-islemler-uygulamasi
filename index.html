@@ -1,0 +1,3043 @@
+<!doctype html>
+<html lang="tr" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<!-- YENİ v3.0: Sürüm güncellendi -->
+<title>Tam Sayılarla İşlemler-Eğlenceli Matematik Oyunu</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<!-- YENİ v3.0: Cyberpunk için Orbitron fontu eklendi -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+/* CSS kodları v3.0 ( */
+:root {
+  /* Varsayılan (Aydınlık) Tema */
+  --bg: #f0f5ff;
+  --card: #ffffff;
+  --text: #222;
+  --text-light: #555;
+  --border: #e1e8ff;
+  --pill-bg: #eef2ff;
+  --accent: #3366ff;
+  --accent-dark: #2850cc;
+  --good: #1aa57a;
+  --bad: #ff4d4d;
+  --header: #ff9800;
+  --gradient: linear-gradient(120deg, #007bff, #8a2be2); /* Yeni v3.0 Gradient */
+  --shadow: rgba(18, 43, 90, 0.08);
+  --input-bg: #ffffff;
+}
+
+html[data-theme='dark'] {
+  --bg: #1a1b26;
+  --card: #24253a;
+  --text: #c0caf5;
+  --text-light: #a9b1d6;
+  --border: #3b4261;
+  --pill-bg: #3b4261;
+  --accent: #7aa2f7;
+  --accent-dark: #567de4;
+  --good: #41a6b5;
+  --bad: #f7768e;
+  --header: #ff9e64;
+  --input-bg: #1a1b26;
+  --shadow: rgba(0, 0, 0, 0.2);
+  --gradient: linear-gradient(120deg, #24253a, #1a1b26); /* Eklendi: Karanlık tema header arka planı */
+}
+
+html[data-theme='matrix'] {
+  --bg: #000000;
+  --card: #0d0d0d;
+  --text: #00ff41;
+  --text-light: #00cc34;
+  --border: #00ff41;
+  --pill-bg: #032d0c;
+  --accent: #00ff41;
+  --accent-dark: #00cc34;
+  --good: #00ff41;
+  --bad: #ff2a00;
+  --header: #00ff41;
+  --input-bg: #000000;
+  --shadow: rgba(0, 255, 65, 0.1);
+  --gradient: linear-gradient(120deg, #002200, #000000); /* Eklendi: Matrix tema header arka planı */
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* YENİ v3.0: Retro (Synthwave) Tema (Geliştirildi) */
+html[data-theme='retro'] {
+  --bg: #1a0a2d; /* Koyu Mor zemin */
+  --card: #2a144a;
+  --text: #ffffff;
+  --text-light: #e0cffc;
+  --border: #4a2d7f;
+  --pill-bg: #3c1f6b;
+  --accent: #ff00ff; /* Neon Pembe */
+  --accent-dark: #cc00cc;
+  --good: #00f0f0; /* Neon Mavi/Cyan */
+  --bad: #f9a825; /* Neon Sarı/Turuncu */
+  --header: #ff00ff;
+  --gradient: linear-gradient(120deg, #ff00ff, #00f0f0);
+  --shadow: rgba(255, 0, 255, 0.15);
+  --input-bg: #1a0a2d;
+}
+/* YENİ v3.0: Font stilleri Retro ve Cyberpunk için ayrıldı */
+html[data-theme='retro'] body,
+html[data-theme='retro'] button,
+html[data-theme='retro'] select,
+html[data-theme='retro'] input {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1.05em; /* Fontu biraz büyüt */
+}
+/* YENİ v3.0: Cyberpunk fontu (Orbitron) olarak değiştirildi */
+html[data-theme='cyberpunk'] body,
+html[data-theme='cyberpunk'] button,
+html[data-theme='cyberpunk'] select,
+html[data-theme='cyberpunk'] input {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.0em; /* Orbitron daha büyük, boyutu sıfırla */
+}
+
+html[data-theme='retro'] body,
+html[data-theme='cyberpunk'] body {
+    position: relative;
+    overflow-x: hidden; /* Dikey kaydırmaya izin ver, yatayı engelle */
+}
+/* Synthwave Grid Efekti */
+html[data-theme='retro'] body::after {
+    content: '';
+    position: fixed; /* 'absolute' yerine 'fixed' yaptık, kaydırmada kalır */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60vh; /* Ekranın alt yarısı */
+    background: 
+        linear-gradient(to right, 
+            rgba(255, 0, 255, 0.4) 1px, transparent 1px),
+        linear-gradient(to bottom, 
+            rgba(255, 0, 255, 0.4) 1px, transparent 1px);
+    background-size: 70px 35px; /* Grid boyutları */
+    transform: perspective(400px) rotateX(60deg);
+    transform-origin: bottom center;
+    opacity: 0.5;
+    z-index: 1; /* İçeriğin arkasında, zeminle arayüz arasında */
+    mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, transparent 100%);
+    pointer-events: none; /* Üzerine tıklanmasını engelle */
+}
+
+
+/* YENİ v3.0: Altın Tema */
+html[data-theme='gold'] {
+  --bg: #121212; /* Çok Koyu Gri/Siyah */
+  --card: #1f1f1f;
+  --text: #ffffff;
+  --text-light: #cccccc;
+  --border: #3a3a3a;
+  --pill-bg: #2a2a2a;
+  --accent: #d4af37; /* Altın Rengi */
+  --accent-dark: #b89b2e;
+  --good: #d4af37;
+  --bad: #ff4d4d;
+  --header: #d4af37;
+  --gradient: linear-gradient(120deg, #d4af37, #f7d060);
+  --shadow: rgba(212, 175, 55, 0.1);
+  --input-bg: #1f1f1f;
+}
+
+/* YENİ v3.0: Arktik (Soğuk) Tema */
+html[data-theme='arctic'] {
+  --bg: #f5fafd; /* Çok Açık Mavi/Beyaz */
+  --card: #ffffff;
+  --text: #0b253a; /* Koyu Mavi */
+  --text-light: #4a6a80;
+  --border: #d6eafc;
+  --pill-bg: #eaf6ff;
+  --accent: #00a8cc; /* Buz Mavisi */
+  --accent-dark: #008aab;
+  --good: #00a8cc;
+  --bad: #e74c3c;
+  --header: #00a8cc;
+  --gradient: linear-gradient(120deg, #00a8cc, #82d8e8);
+  --shadow: rgba(11, 37, 58, 0.08);
+  --input-bg: #ffffff;
+}
+
+/* YENİ v3.0: Cyberpunk (Neon Şehir) Tema */
+html[data-theme='cyberpunk'] {
+  --bg: #0a0a1a; /* Çok koyu lacivert */
+  --card: #1a1a2f;
+  --text: #e0e0ff;
+  --text-light: #a0a0cc;
+  --border: #3a3a5f;
+  --pill-bg: #2a2a4f;
+  --accent: #00ffff; /* Cyan */
+  --accent-dark: #00cccc;
+  --good: #f0ff00; /* Neon Sarı */
+  --bad: #ff007f; /* Neon Pembe */
+  --header: #00ffff;
+  --gradient: linear-gradient(120deg, #00ffff, #ff007f);
+  --shadow: rgba(0, 255, 255, 0.15);
+  --input-bg: #0a0a1a;
+}
+
+/* YENİ TEMA: Sakura */
+html[data-theme='sakura'] {
+  --bg: #2f2f4f; /* Koyu indigo */
+  --card: #3f3f5f;
+  --text: #e0cffc; /* Lavanta */
+  --text-light: #b4a5d1;
+  --border: #7a5c6e; /* Muted pink */
+  --pill-bg: #3b4261;
+  --accent: #ff70a6; /* Sakura pink */
+  --accent-dark: #e66395;
+  --good: #70ffa6; /* Nane yeşili */
+  --bad: #ff7070; /* Yumuşak kırmızı */
+  --header: #ff70a6;
+  --gradient: linear-gradient(120deg, #ff70a6, #70ffa6);
+  --shadow: rgba(255, 112, 166, 0.15);
+  --input-bg: #2f2f4f;
+}
+
+/* YENİ TEMA: Yaz Tatili */
+html[data-theme='summer'] {
+  --bg: #e0f7fa; /* Açık deniz mavisi */
+  --card: #ffffff; /* Kum beyazı */
+  --text: #004d40; /* Koyu deniz yeşili */
+  --text-light: #00796b;
+  --border: #b2ebf2;
+  --pill-bg: #fff8e1; /* Açık kum rengi */
+  --accent: #00bcd4; /* Turkuaz deniz */
+  --accent-dark: #00838f;
+  --good: #4caf50; /* Palmiye yeşili */
+  --bad: #ff5722; /* Güneş batımı turuncusu */
+  --header: #ff9800; /* Güneş sarısı/turuncusu */
+  --gradient: linear-gradient(120deg, #ff9800, #00bcd4);
+  --shadow: rgba(0, 188, 212, 0.15);
+  --input-bg: #ffffff;
+}
+
+*{box-sizing:border-box;transition:all 0.2s ease-in-out;}
+body{
+  margin:0;
+  font-family:'Poppins',system-ui,sans-serif;
+  background: var(--bg);
+  min-height:100vh;
+  color: var(--text);
+  position: relative;
+  overflow-x: hidden;
+}
+
+html[data-theme='matrix'] body {
+  background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,20,0,1) 100%);
+}
+
+.wrap{
+    padding:20px;
+    max-width:980px;
+    margin:auto;
+    position: relative; 
+    z-index: 5; /* YENİ v3.0: Gridin önünde olmalı */
+    min-height: calc(100vh - 80px); /* Footer yüksekliği kadar boşluk bırak */
+}
+
+header{
+  background: var(--gradient);
+  color:white;
+  padding:16px 24px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  box-shadow:0 4px 12px rgba(0,0,0,0.1);
+  border-radius:0 0 20px 20px;
+  position: relative; 
+  z-index: 10;
+}
+header h1{margin:0;font-size:26px;text-shadow:0 2px 4px rgba(0,0,0,0.15);}
+nav{display:flex;gap:10px;flex-wrap:wrap; align-items: center;}
+nav button, #themeSelector {
+  background:white;color:var(--header);border:none;
+  padding:8px 14px;border-radius:10px;font-weight:600;cursor:pointer;
+  box-shadow:0 2px 4px rgba(0,0,0,0.1);
+  height: 38px;
+}
+nav button:hover, #themeSelector:hover {transform:scale(1.05);background:#fff3e0;}
+#themeSelector {
+    background-color: white;
+    color: #007bff; /* Temadan bağımsız renk */
+    font-weight: 600;
+    padding: 0 10px;
+}
+
+/* YENİ v3.0: Karanlık ve Matrix tema header buton düzeltmesi */
+html[data-theme='dark'] nav button,
+html[data-theme='matrix'] nav button {
+    background: var(--pill-bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+html[data-theme='dark'] nav button:hover,
+html[data-theme='matrix'] nav button:hover {
+    background: var(--border);
+    color: var(--accent);
+}
+html[data-theme='dark'] #themeSelector,
+html[data-theme='matrix'] #themeSelector {
+    background: var(--pill-bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+html[data-theme='matrix'] header {
+    color: var(--accent);
+}
+
+
+.card{
+  background:var(--card);
+  color: var(--text);
+  border-radius:18px;
+  box-shadow:0 8px 24px var(--shadow);
+  padding:22px;
+  margin-bottom:22px;
+  animation:fadeIn 0.4s ease;
+  border: 1px solid var(--border);
+}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.hidden{display:none;}
+.center{text-align:center;}
+.equation{
+  font-size:32px;font-weight:700;
+  background: linear-gradient(90deg, var(--bg), var(--card));
+  padding:20px;border-radius:14px;text-align:center;
+  margin-bottom:14px;box-shadow:inset 0 0 10px rgba(0,0,0,0.05);
+  border: 1px solid var(--border);
+}
+/* Geri bildirim renkleri */
+.equation.correct-flash{background-color:var(--good)!important; color: white !important;}
+.equation.wrong-flash{background-color:var(--bad)!important; color: white !important;}
+
+/* YENİ: Yanlış Cevap Sallanma Animasyonu (Görsel Geri Bildirim) */
+.equation.wrong-shake {
+  animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+}
+@keyframes shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+  40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+.meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px; justify-content: center;}
+.pill{
+  background:var(--pill-bg);
+  color: var(--text);
+  padding:8px 12px;
+  border-radius:999px;
+  font-weight:600;
+  box-shadow:0 2px 6px rgba(0,0,0,0.05);
+  border: 1px solid var(--border);
+}
+.timer-pill{
+  position:relative;
+  overflow:hidden;
+  padding:8px 12px;
+  border-radius:999px;
+  font-weight:700;
+  color:var(--accent);
+  background:var(--pill-bg);
+  box-shadow:0 2px 6px rgba(0,0,0,0.05);
+  border: 1px solid var(--border);
+}
+/* Süre Çubuğu Stili */
+.time-bar {
+  position:absolute;
+  top:0;left:0;
+  height:100%;
+  width:100%; /* JS ile azalacak */
+  background-color:var(--good);
+  z-index:1;
+  transition:width 1s linear, background-color 0.5s linear;
+}
+.time-text {
+  position:relative;
+  z-index:2;
+}
+html[data-theme='dark'] .time-text,
+html[data-theme='matrix'] .time-text,
+html[data-theme='retro'] .time-text,
+html[data-theme='sakura'] .time-text,
+html[data-theme='summer'] .time-text, /* YENİ TEMA */
+/* YENİ v3.0: Cyberpunk süre yazısı düzeltmesi */
+html[data-theme='cyberpunk'] .time-text {
+    mix-blend-mode: difference;
+    color: white;
+}
+/* YENİ v3.0: Altın ve Arktik temaları için süre yazısı düzeltmesi */
+html[data-theme='gold'] .time-text {
+    mix-blend-mode: normal;
+    color: #121212; /* Görünürlük için koyu renk */
+    text-shadow: 0 0 2px var(--bg);
+}
+html[data-theme='arctic'] .time-text {
+    mix-blend-mode: normal;
+    color: #0b253a; /* Görünürlük için koyu renk */
+}
+
+
+.input-row{display:flex;gap:10px;margin-bottom:14px; flex-wrap: wrap;}
+input[type=number]{
+  padding:10px;border-radius:10px;border:2px solid var(--border);flex:1;font-size:16px;
+  z-index: 55;
+  background-color: var(--input-bg);
+  color: var(--text);
+}
+button.secondary{
+  background:var(--pill-bg);color:var(--text);border:1px solid var(--border);
+  padding:10px;border-radius:10px;cursor:pointer;
+}
+button.secondary:hover{background:var(--border);}
+button#startBtn,button#submit{
+  background:var(--accent);color:white;border:none;
+  padding:10px;border-radius:10px;cursor:pointer;
+  box-shadow:0 4px 10px rgba(51,102,255,0.3);
+}
+button#startBtn:hover,button#submit:hover{
+  background:var(--accent-dark);transform:scale(1.05);
+}
+
+/* YENİ v3.0: Sayısal Giriş Alanı Konteyneri */
+.input-numeric-container {
+    display: flex;
+    width: 100%; /* Alanı kaplaması için flex: 1 yerine width: 100% */
+    gap: 10px;
+}
+
+/* YENİ v3.0: XP Bar Stilleri */
+.xp-bar-container {
+    width: 100%;
+    height: 25px;
+    background-color: var(--pill-bg);
+    border-radius: 999px;
+    border: 2px solid var(--border);
+    margin-top: 15px;
+    position: relative;
+    overflow: hidden;
+}
+.xp-bar {
+    width: 0%; /* JS ile güncellenecek */
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--good));
+    border-radius: 999px;
+    transition: width 0.5s ease-in-out;
+}
+.xp-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--text);
+    mix-blend-mode: difference;
+    filter: invert(1);
+}
+/* YENİ v3.0: XP Yazı Tipi Hatası Düzeltmesi (Tüm temalar için tek kural) */
+/* Diğer tema override'ları kaldırıldı, bu kural hepsini kapsar */
+
+
+.badge-grid{
+  display:grid;gap:12px;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  margin-top:14px;
+}
+/* YENİ v3.0: Mağaza Tema Satın Alma Butonu */
+.theme-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--bg);
+}
+.theme-item button {
+    padding: 6px 12px;
+    font-size: 14px;
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.theme-item button:hover {
+    background-color: var(--accent-dark);
+}
+.theme-item button:disabled {
+    background-color: var(--good);
+    color: white;
+    cursor: not-allowed;
+}
+
+
+.badge{
+  border:1px solid var(--border);border-radius:14px;
+  padding:14px;text-align:center;font-weight:600;background:var(--card);
+  box-shadow:0 2px 8px var(--shadow);
+}
+.badge.earned{
+  background:var(--good);
+  color: white;
+  border-color:var(--good);
+  box-shadow:0 6px 14px rgba(26,165,122,0.1);
+  animation:pulse 1s ease infinite alternate;
+}
+html[data-theme='dark'] .badge.earned {
+    color: var(--text);
+}
+html[data-theme='matrix'] .badge.earned,
+html[data-theme='retro'] .badge.earned,
+html[data-theme='sakura'] .badge.earned,
+html[data-theme='summer'] .badge.earned { /* YENİ TEMA */
+    color: #000;
+}
+html[data-theme='gold'] .badge.earned {
+    color: #121212;
+}
+@keyframes pulse{from{transform:scale(1);}to{transform:scale(1.03);}}
+
+.notify{
+    position:fixed;top:20px;right:20px;
+    background:var(--good);
+    color:white;
+    padding:12px 20px;
+    border-radius:12px;
+    font-weight:700;
+    box-shadow:0 4px 12px rgba(0,0,0,0.2);
+    animation:pop 0.45s ease;
+    z-index: 1001;
+}
+@keyframes pop{from{transform:scale(0.85);opacity:0;}to{transform:scale(1);opacity:1;}}
+
+/* DÜZENLEME: Footer Stilleri */
+.footer{
+  text-align:center;
+  padding: 14px;
+  font-size: 14px;
+  color: var(--text-light);
+  background: transparent; /* Arka planı transparan yap */
+  border-top: none; /* Üst çizgiyi kaldır */
+  position: relative;
+  z-index: 10;
+  width: 100%;
+}
+
+/* DÜZENLEME: Ana sayfadaki footer için özel stil */
+#home .footer {
+    margin-top: 20px; /* Kartlarla arasına boşluk koy */
+    background: var(--card); /* Ana sayfada kart arka planını alsın */
+    border-top: 1px solid var(--border); /* Çizgi ekle */
+    border-radius: 18px; /* Kart gibi görünsün */
+}
+
+
+/* ANA SAYFA STİLİ */
+.home-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+.mode-card {
+    background: var(--card);
+    border: 3px solid var(--accent);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 4px 15px var(--shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    /* DÜZENLEME: Kartların iç yüksekliğini eşitlemek için */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.mode-card:hover {
+    background: var(--pill-bg);
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(51, 102, 255, 0.2);
+}
+html[data-theme='matrix'] .mode-card:hover {
+    box-shadow: 0 0 15px var(--accent);
+}
+html[data-theme='retro'] .mode-card:hover {
+    box-shadow: 0 0 15px var(--accent);
+}
+.mode-card h3 {
+    color: var(--accent);
+    margin-top: 0;
+}
+.mode-card p {
+    font-size: 14px;
+    color: var(--text-light);
+    flex-grow: 1; /* Açıklamaların alanı doldurmasını sağla */
+}
+/* DÜZENLEME: Ana sayfa kart buton stili */
+.mode-card button {
+    background:var(--accent);
+    color:white;
+    border:none;
+    padding:10px 14px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight: 600;
+    margin-top: 15px; /* Açıklama ile arasına boşluk koy */
+}
+.mode-card button:hover {
+    background:var(--accent-dark);
+    transform: scale(1.05);
+}
+
+
+/* Matematik İşaretleri Arka Plan Stilleri */
+.math-symbols-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0; 
+    pointer-events: none;
+}
+
+.math-symbol {
+    position: absolute;
+    font-size: 3em;
+    color: var(--accent);
+    opacity: 0;
+    animation: fall ease-in-out infinite;
+    user-select: none;
+    pointer-events: none;
+    filter: blur(0.5px);
+    font-weight: 800;
+    text-shadow: 0 0 8px var(--accent);
+    /* DÜZELTME: Başlangıçta ekranın üstünde kalmasını engelle */
+    transform: translateY(-100px);
+}
+html[data-theme='light'] .math-symbol {
+    color: rgba(51, 102, 255, 0.25);
+    text-shadow: 0 0 8px rgba(51, 102, 255, 0.2);
+}
+/* YENİ v3.0: Kar tanesi animasyonu (daha yavaş ve daha az bulanık) */
+html[data-theme='arctic'] .math-symbol {
+    font-weight: 400;
+    text-shadow: 0 0 5px var(--accent);
+    filter: blur(1px);
+}
+
+
+@keyframes fall {
+    0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        /* YENİ v3.0: Daha belirsiz (0.5 -> 0.3) */
+        opacity: 0.3;
+    }
+    90% {
+        /* YENİ v3.0: Daha belirsiz (0.2 -> 0.1) */
+        opacity: 0.1;
+    }
+    100% {
+        transform: translateY(calc(100vh + 100px)) rotate(360deg);
+        opacity: 0;
+    }
+}
+html[data-theme='matrix'] @keyframes fall {
+    0% { transform: translateY(-100px); opacity: 0; }
+    10% { opacity: 0.8; }
+    90% { opacity: 0.4; }
+    100% { transform: translateY(calc(100vh + 100px)); opacity: 0; }
+}
+/* YENİ v3.0: Kar tanesi düşüşü (dönme yok) */
+html[data-theme='arctic'] @keyframes fall {
+    0% {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateY(calc(100vh + 100px));
+        opacity: 0;
+    }
+}
+
+/* YENİ v3.0: Cyberpunk "Dijital Yağmur" Animasyonu */
+@keyframes fall-digital {
+    0% { 
+        transform: translateY(-100px); 
+        opacity: 0.8; 
+    }
+    100% { 
+        transform: translateY(calc(100vh + 100px)); 
+        opacity: 0.8; 
+    }
+}
+
+/* YENİ TEMA: Sakura Düşüş Animasyonu */
+@keyframes fall-flutter {
+    0% {
+        transform: translateY(-100px) rotate(0deg) translateX(0px);
+        opacity: 0;
+    }
+    25% {
+        transform: translateY(25vh) rotate(45deg) translateX(20px);
+        opacity: 0.7;
+    }
+    50% {
+        transform: translateY(50vh) rotate(-30deg) translateX(-20px);
+        opacity: 0.5;
+    }
+    75% {
+        transform: translateY(75vh) rotate(60deg) translateX(15px);
+        opacity: 0.3;
+    }
+    100% {
+        transform: translateY(calc(100vh + 100px)) rotate(120deg) translateX(0px);
+        opacity: 0;
+    }
+}
+
+
+/* MAĞAZA KAYDIRMA DÜZELTMESİ */
+#shop {
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+/* YENİ İSTATİSTİK ÇUBUĞU STİLLERİ */
+.ratio-item {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--bg);
+}
+
+.ratio-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--accent);
+}
+
+progress {
+    width: 100%;
+    height: 20px;
+    border-radius: 10px;
+    background-color: var(--bad);
+    /* Yanlış kısmın varsayılan arka planı */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+}
+
+/* Doğru kısmı (value) yeşil yapma */
+progress::-webkit-progress-value {
+    background-color: var(--good);
+    border-radius: 10px;
+}
+progress::-moz-progress-bar {
+    background-color: var(--good);
+    border-radius: 10px;
+}
+
+.ratio-text {
+    position: relative;
+    top: -20px;
+    /* Çubuğun üstüne hizala */
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 0 2px #000;
+}
+
+/* YENİ v3.0: Günlük Ödül Butonu Animasyonu (KALDIRILDI) */
+/*
+@keyframes pulse-reward {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 152, 0, 0.7); }
+  70% { transform: scale(1.05); box-shadow: 0 0 10px 15px rgba(255, 152, 0, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 152, 0, 0); }
+}
+#dailyRewardBtn.ready {
+    background: var(--header);
+    color: white;
+    animation: pulse-reward 2s infinite;
+    border: none;
+}
+#dailyRewardBtn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    animation: none;
+}
+*/
+
+/* YENİ v3.0: Seviye Atlama Modalı Stilleri */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.modal-backdrop:not(.hidden) {
+    opacity: 1;
+    pointer-events: all;
+}
+.modal-content {
+    text-align: center;
+    animation: pop 0.45s ease;
+    z-index: 2001;
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 30px var(--accent);
+    max-width: 600px;
+    width: 90%;
+}
+.history-item {
+    background: var(--pill-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.history-item:hover {
+    background: var(--border);
+}
+.history-question {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--accent);
+}
+.history-answers {
+    margin-top: 5px;
+    font-size: 14px;
+}
+.history-explanation {
+    margin-top: 10px;
+    padding: 10px;
+    background: var(--card);
+    border-left: 4px solid var(--accent);
+    border-radius: 4px;
+    font-size: 14px;
+    color: var(--text-light);
+}
+html[data-theme='retro'] .modal-content {
+    box-shadow: 0 0 30px var(--good); /* Neon mavi */
+}
+.level-up-rewards {
+    margin: 20px 0;
+    font-size: 1.1em;
+    text-align: left;
+    display: inline-block;
+}
+.level-up-rewards div {
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+#levelUpCloseBtn {
+    background: var(--good);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 700;
+}
+#levelUpCloseBtn:hover {
+    transform: scale(1.05);
+}
+
+/* YENİ: Mobil Uyumlu Meta Alanı */
+@media(max-width:720px){
+  .input-row{flex-direction:column;}
+  /* Meta alanındaki pill'leri sığdırmak için küçültme */
+  .meta{gap: 5px; justify-content: center;} 
+  .pill{padding: 6px 10px; font-size: 14px;}
+  
+  header h1{font-size:20px;}
+  .math-symbol {
+    font-size: 2em;
+  }
+  
+  /* YENİ v3.0: Mobil için giriş konteyneri */
+  .input-numeric-container {
+      flex-direction: column;
+      width: 100%;
+  }
+  
+  /* YENİ v3.0: Mobil için header butonlarını sığdır */
+  nav {
+      gap: 5px;
+      justify-content: center;
+      width: 100%;
+  }
+  nav button, #themeSelector {
+      padding: 6px 10px;
+      font-size: 12px;
+      height: 34px;
+  }
+  header h1 {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 10px;
+  }
+}
+</style>
+
+<!-- YENİ v3.0: Firebase SDK'ları Eklendi -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+</head>
+
+<body>
+
+<div class="math-symbols-background" id="mathSymbolsBg"></div>
+
+<header>
+  <!-- YENİ v3.0: Sürüm güncellendi -->
+  <h1>🎮 EMO v3.0</h1>
+  <nav>
+    <button onclick="showPage('home')">Ana Sayfa</button>
+    <button id="gamePageBtn">Ayarlar/Başlat</button>
+    <button onclick="showPage('how')">Nasıl Oynanır?</button>
+    <button onclick="showPage('about')">Hakkında</button>
+    <button onclick="showPage('stats')">📊 İstatistikler</button>
+    <button id="shopBtn" class="secondary" onclick="openShop()">🛒 Mağaza</button>
+    <button id="soundToggleBtn" class="secondary">🔊 Ses Açık</button>
+    <!-- YENİ v3.0: Online Özellikler -->
+    <button id="authBtn" class="secondary" onclick="openAuthModal()">👤 Giriş Yap</button>
+    <button onclick="showPage('leaderboard')">🏆 Sıralama</button>
+    
+    <select id="themeSelector" title="Tema Seç">
+      <option value="light">☀️ Aydınlık</option>
+      <option value="dark">🌙 Karanlık</option>
+    </select>
+  </nav>
+</header>
+
+<div class="wrap">
+  <div id="home">
+    <div class="card center">
+      <!-- YENİ v3.0: Sürüm güncellendi -->
+      <h2>Eğlenceli Matematik Oyunu</h2>
+      <p>Oynamak istediğin modu seçerek hemen başla veya "Ayarlar/Başlat" sayfasından detaylı ayarları yap.</p>
+    </div>
+    
+    <div class="home-grid">
+      
+        <div class="mode-card" onclick="startQuickGame('mixed')">
+            <div>
+                <h3>🔀 Klasik İşlemler</h3>
+                <!-- YENİ DÜZENLEME: Açıklama güncellendi -->
+                <p>Tüm işlem türlerinin (Toplama, Çıkarma, Üslü Sayılar, Cebir vb.) rastgele geldiği standart oyun modu.</p>
+            </div>
+            <button>Hemen Başla</button>
+        </div>
+        
+        <div class="mode-card" onclick="startQuickGame('speed')">
+            <div>
+                <h3>⚡ Blitz Modu (60sn)</h3>
+                <p>Süre dolana kadar en fazla doğruyu yap! 60 saniye içinde en yüksek skoru hedefle.</p>
+            </div>
+            <button>Hemen Başla</button>
+        </div>
+
+        <div class="mode-card" onclick="startQuickGame('survival')">
+            <div>
+                <h3>⏳ Hayatta Kalma</h3>
+                <p>Süre bitmeden cevap ver! Her doğru cevap sana ekstra zaman kazandırır. Ne kadar dayanabilirsin?</p>
+            </div>
+            <button>Hemen Başla</button>
+        </div>
+
+        <div class="mode-card" onclick="startQuickGame('missing')">
+            <div>
+                <h3>❓ Eksik Sayı Bulma</h3>
+                <p>X'i bul: `(-5) + X = 12`.
+                Cebirsel düşünme yeteneğini geliştir.</p>
+            </div>
+            <button>Hemen Başla</button>
+        </div>
+        <!-- YENİ DÜZENLEME: Üslü Sayılar kartı kaldırıldı -->
+    </div>
+    
+    <!-- DÜZENLEME: Footer buraya taşındı -->
+    <div class="footer">Ali Ensar tarafından geliştirildi © 2025</div>
+    
+  </div>
+
+  <div id="how" class="hidden">
+    <div class="card">
+      <!-- YENİ v3.0: Açıklamalar güncellendi ve sadeleştirildi -->
+      <h2>📘 Nasıl Oynanır? (v3.0)</h2>
+      <p>Oyunun amacı tam sayılarla işlemleri hızlı ve doğru bir şekilde çözmektir.</p>
+      <ul>
+        <li><strong>Mod Seçimi:</strong> "Ayarlar/Başlat" menüsünden veya ana sayfadaki hızlı başlatma kartlarından oynamak istediğiniz oyun modunu (Klasik, Blitz, Hayatta Kalma, Eksik Sayı) seçin.</li>
+        <li><strong>Seviye:</strong> Soruların zorluk seviyesini (Basit, Orta, Zor) seçin. Zor seviyeler daha fazla 🪙 Bakiye kazandırır.</li>
+        <li><strong>Puanlama:</strong>
+            <ul>
+                <li>Basit sorular: <strong>10 🪙</strong></li>
+                <li>Orta sorular: <strong>15 🪙</strong></li>
+                <li>Zor sorular: <strong>20 🪙</strong></li>
+            </ul>
+        </li>
+        <!-- YENİ DÜZENLEME: Pas Hakkı Eklendi -->
+        <li><strong>Pas Hakkı 🎟️:</strong> Her oyunun başında 3 adet ücretsiz pas hakkı kazanırsınız. "Pas" butonuna tıkladığınızda önce bu hak kullanılır ve hiçbir ceza (puan/can/seri kaybı) almazsınız.</li>
+        <li><strong>Hayatta Kalma Modu ⏳:</strong> 10 saniye ile başlarsınız. Her doğru cevap <strong>+3 saniye</strong>, her yanlış cevap veya pas geçme <strong>-2 saniye</strong> olarak süreyi etkiler.</li>
+        <li><strong>Blitz Modu ⚡:</strong> 60 saniye içinde yapabildiğiniz kadar çok doğru yapmaya çalışın.</li>
+        <li><strong>Can Sistemi:</strong> Normal modlarda 3 canınız (❤️) vardır. Her yanlış cevapta veya süre bittiğinde bir can kaybedersiniz.</li>
+        <li><strong>Seri (Streak) 🔥:</strong> Art arda doğru cevaplar serinizi artırır. 5 ve katı serilerde ekstra puan kazanırsınız.</li>
+        <li><strong>Mağaza 🛒:</strong> Kazandığınız 🪙 Bakiye ile mağazadan 💡 İpucu, 🛡️ Seri Kalkanı, ❤️ Ekstra Can veya yeni 🎨 Temalar satın alabilirsiniz.</li>
+        <li><strong>Seviye Atlama 🎖️:</strong> Soru çözdükçe XP kazanırsınız. XP çubuğu dolduğunda seviye atlar ve ödüller kazanırsınız.</li>
+        <li><strong>Kontroller:</strong> Cevabı yazdıktan sonra <strong>ENTER</strong> tuşuna basarak veya "Kontrol Et" butonuna tıklayarak cevabınızı gönderebilirsiniz.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="about" class="hidden">
+    <div class="card center">
+      <h2>👨‍💻 Hakkında</h2>
+      <p>
+        **“Tam Sayılarla İşlemler”** eğitici bir matematik oyunudur.
+        Öğrencilerin temel işlemleri eğlenerek pekiştirmesi için tasarlanmıştır.
+        Oyun; süreye karşı yarış, puan/XP kazanma, seviye atlama, rozet toplama ve mağaza sistemiyle motivasyonu artırmayı hedefler.
+      </p>
+      <br>
+      <p>
+        <b>Geliştirici:</b> Ali Ensar
+        <br>
+        <!-- YENİ v3.0: Sürüm güncellendi -->
+        <b>Sürüm:</b> 2025 3.0 BETA Sürüm
+      </p>
+    </div>
+  </div>
+  
+  <div id="stats" class="hidden">
+    <div class="card center">
+      <h2>📊 İstatistikler</h2>
+      <p>Oyun kariyerindeki ilerlemeni burada takip edebilirsin.</p>
+    </div>
+
+    <div class="card">
+       
+        <h3>Genel İlerleme</h3>
+        <div class="badge-grid" id="stats-summary">
+            <div class="badge">Toplam Oyun: <span id="stat-games">0</span></div>
+            <div class="badge">En Yüksek Skor: <span id="stat-max-score">0</span></div>
+        </div>
+        
+        <hr style="margin: 20px 0;">
+
+        <h3>İşlem Başarısı</h3>
+        <div id="operationStatsContainer">
+            <!-- JS ile dolacak -->
+          </div>
+
+        <hr style="margin: 20px 0;">
+
+        <h3>Toplam Doğru/Yanlış Oranı</h3>
+        <div id="totalRatioContainer" class="ratio-item">
+            <!-- JS ile dolacak -->
+        </div>
+        
+        <div class="badge-grid" style="margin-top: 10px;">
+            <div class="badge">Toplam Doğru: <span id="stat-total-correct">0</span></div>
+            <div class="badge">Toplam Yanlış: <span id="stat-total-wrong">0</span></div>
+        </div>
+    </div>
+  </div>
+
+  <!-- YENİ v3.0: Liderlik Tablosu Sayfası -->
+  <div id="leaderboard" class="hidden">
+    <div class="card center">
+      <h2>🏆 Küresel Liderlik Tablosu</h2>
+      <p>En yüksek skor yapan oyuncular burada listelenir.</p>
+    </div>
+    <div class="card">
+      <div id="leaderboardList" style="display:flex; flex-direction:column; gap:10px;">
+          Yükleniyor... Lütfen Firebase ayarlarını yapıp giriş yapın.
+      </div>
+    </div>
+  </div>
+
+  <div id="game" class="hidden">
+    <div class="card grid">
+      <div class="controls" id="gameSettings">
+        <label>İşlem türü
+          <select id="mode">
+            <option value="add">Toplama</option>
+            <option value="sub">Çıkarma</option>
+            <option value="mul">Çarpma</option>
+            <option value="div">Bölme</option>
+            <option value="paren">Parantezli</option>
+            <option value="missing">Eksik Sayı Bulma (X)</option>
+            <option value="exp">Üslü Sayılar</option> 
+            <option value="algebra">Cebirli</option>
+            <option value="speed">Blitz Modu (60sn)</option>
+            <option value="survival">Hayatta Kalma (⏳)</option>
+            <option value="mixed" selected>Karışık</option>
+          </select>
+        </label>
+        <label>Seviye
+          <select id="level">
+            <option value="1">Seviye 1 (Basit - 10🪙)</option>
+            <option value="2">Seviye 2 (Orta - 15🪙)</option>
+            <option value="3">Seviye 3 (Zor - 20🪙)</option>
+            <option value="adaptive">🤖 Adaptif Zorluk (Oto-Ayarlı)</option>
+          </select>
+        </label>
+        <label>Soru sayısı
+          <select id="questionCount">
+            <option value="10">10 Soru</option>
+            <option value="20">20 Soru</option>
+            <option value="-1">Süresiz</option>
+          </select>
+        </label>
+      </div>
+
+      <div style="display:flex;align-items:flex-end;gap:8px;margin-bottom:10px;">
+          <button id="startBtn">Oyunu Başlat</button>
+          <button id="hintBtn" class="secondary">💡 İpucu Kullan</button>
+      </div>
+
+      <div class="equation" id="equation">Başlamak için "Oyuna Başlat"a tıkla.</div>
+
+      <div class="timer-pill hidden" id="game-timer-pill" style="background-color: var(--accent); color: white;">
+            <div id="gameTimeBar" class="time-bar" style="background-color: var(--accent-dark);"></div>
+            <!-- YENİ v3.0: Dinamik Zamanlayıcı Etiketi -->
+            <span class="time-text"><span id="gameTimeLabel">Kalan Oyun Süresi</span>: <span id="gameTime">60</span>s</span>
+      </div>
+
+     
+      <div class="meta">
+        <div class="pill">Puan: <span id="score">0</span></div>
+        <div class="pill">Doğru: <span id="correct">0</span></div>
+        <div class="pill">Yanlış: <span id="wrong">0</span></div>
+        <div class="pill">Can: <span id="lives">3</span> ❤️</div>
+        <div class="pill">Seri: <span id="streak">0</span> 🔥</div>
+        <div class="pill">Bakiye: <span id="wallet">0</span> 🪙</div>
+        <div class="pill">İpucu: <span id="hints">0</span> 💡</div>
+        <!-- YENİ EKLENTİ: Pas Hakkı Pili -->
+        <div class="pill">Pas: <span id="skips">0</span> 🎟️</div>
+        <div class="pill">Kalkan: <span id="shields">0</span> 🛡️</div>
+        <div class="pill">Seviye: <span id="levelDisplay">1</span> 🎖️</div>
+        <div class="pill hidden" id="mode-display" style="background-color: var(--accent); color: white;">Mod: <span id="modeDisplayText">---</span></div>
+ 
+        <!-- Soru Zamanlayıcısı -->
+        <div class="timer-pill" id="question-timer-pill">
+            <div id="timeBar" class="time-bar" style="width:100%;background-color: var(--good);"></div>
+            <span class="time-text">Süre: <span id="time">—</span></span>
+        </div>
+      </div>
+
+      <div class="xp-bar-container">
+          <div class="xp-bar" id="xpBar" style="width: 0%;"></div>
+          <span class="xp-text">XP: <span id="xpText">0 / 100</span></span>
+      </div>
+
+      <div class="input-row" style="margin-top: 15px;">
+        <div id="input-numeric" class="input-numeric-container">
+            <input type="number" id="answer" step="1" placeholder="Cevabını yaz" />
+            <button id="submit">Kontrol Et (Enter)</button>
+            <button id="skip" class="secondary">Pas</button>
+        </div>
+      </div>
+
+      <div class="result" id="result"></div>
+
+      <div id="shop" class="card hidden">
+        <h2>🛒 Mağaza</h2>
+        <p>Bakiye: <span id="wallet2">0</span> 🪙</p>
+        
+        <!-- YENİ DÜZENLEME: Mağaza Kategorileri -->
+        <hr>
+        <!-- YENİ DÜZENLEME: Başlık değişti -->
+        <h3>⚡ Güçlendirmeler</h3>
+        <div class="badge-grid">
+            <!-- YENİ DÜZENLEME: Açıklamalar eklendi -->
+            <div>🔥 2x Puan (5 Soru) (120 🪙) <button onclick="buyItem('double',120)">Satın Al</button></div>
+            <div>⚡ 2x XP (5 Soru) (100 🪙) <button onclick="buyItem('double_xp', 100)">Satın Al</button></div>
+            <div>💰 2x Bakiye (5 Soru) (150 🪙) <button onclick="buyItem('double_wallet', 150)">Satın Al</button></div>
+            <div>⏱️ Zaman Dondurucu (1 Soru) (70 🪙) <button onclick="buyItem('freeze',70)">Satın Al</button></div>
+        </div>
+        
+        <hr>
+        <h3>📦 Eşyalar</h3>
+        <div class="badge-grid">
+          <div>❤️ Ekstra Can (50 🪙) <button onclick="buyItem('life',50)">Satın Al</button></div>
+          <div>💡 İpucu Hakkı (30 🪙) <button onclick="buyItem('hint',30)">Satın Al</button></div>
+          <div>🛡️ Seri Kalkanı (80 🪙) <button onclick="buyItem('shield',80)">Satın Al</button></div>
+          <!-- YENİ EKLENTİ: Pas Hakkı KALDIRILDI -->
+          <div>🎉 Süper Konfeti (100 🪙) <button onclick="buyItem('konfeti',100)">Satın Al</button></div>
+        </div>
+
+        <hr>
+        <h3>🎨 Temalar</h3>
+        <p>Görünümü kişiselleştir! (Satın aldıktan sonra temayı sağ üstteki menüden seçin)</p>
+        <div class="badge-grid">
+            <div class="theme-item">
+                <span>📟 Matrix Teması</span>
+                <button id="buy-theme-matrix" onclick="buyItem('theme_matrix', 150)">150 🪙</button>
+            </div>
+             <div class="theme-item">
+                <span>🎨 Retro Tema</span>
+                <button id="buy-theme-retro" onclick="buyItem('theme_retro', 200)">200 🪙</button>
+            </div>
+             <div class="theme-item">
+                <span>⚜️ Altın Tema</span>
+                <button id="buy-theme-gold" onclick="buyItem('theme_gold', 200)">200 🪙</button>
+            </div>
+             <div class="theme-item">
+                <span>❄️ Arktik Tema</span>
+                <button id="buy-theme-arctic" onclick="buyItem('theme_arctic', 200)">200 🪙</button>
+            </div>
+             <!-- YENİ v3.0: Cyberpunk Tema Butonu -->
+             <div class="theme-item">
+                <span>🌃 Cyberpunk Tema</span>
+                <button id="buy-theme-cyberpunk" onclick="buyItem('theme_cyberpunk', 250)">250 🪙</button>
+            </div>
+            <!-- YENİ TEMA -->
+             <div class="theme-item">
+                <span>🌸 Sakura Tema</span>
+                <button id="buy-theme-sakura" onclick="buyItem('theme_sakura', 300)">300 🪙</button>
+            </div>
+             <div class="theme-item">
+                <span>🏖️ Yaz Tatili Tema</span>
+                <button id="buy-theme-summer" onclick="buyItem('theme_summer', 300)">300 🪙</button>
+            </div>
+        </div>
+        <hr>
+        <h3>🏅 Rozetlerim</h3>
+        <div id="badges" class="badge-grid"></div>
+        <hr>
+        <button onclick="shopEl.classList.add('hidden')">Kapat</button>
+        <!-- YENİ EKLENTİ: Ayrı İstatistik Sıfırlama ve Stil Güncellemesi -->
+        <button onclick="resetStats()" class="secondary" style="background-color: var(--header); color: white; border: none;">İstatistikleri Sıfırla</button>
+        <button onclick="resetProfile()" style="background-color: var(--bad); color: white; border: none;">Tüm Profili Sıfırla</button>
+      </div>
+    </div>
+  
+  </div>
+  
+  <!-- DÜZENLEME: Footer buradan kaldırıldı -->
+  
+</div>
+
+<!-- DÜZENLEME: Footer genel olarak buraya (wrap dışına) taşındı -->
+<div class="footer" id="main-footer">Ali Ensar tarafından geliştirildi © 2025</div>
+
+
+<!-- YENİ: Soru Geçmişi Modalı -->
+<div id="wrongHistoryModal" class="modal-backdrop hidden">
+    <div class="modal-content card" style="max-height: 80vh; overflow-y: auto;">
+        <h2>📝 Yanlış Yapılan Sorular</h2>
+        <p>Bu oyunda yaptığın hataları aşağıda görebilirsin. Açıklamayı görmek için soruya tıkla.</p>
+        <div id="wrongHistoryList" style="text-align: left; margin-top: 15px;"></div>
+        <button id="wrongHistoryCloseBtn" style="margin-top: 15px; padding: 10px 20px; background: var(--header); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer;">Kapat</button>
+    </div>
+</div>
+
+<!-- YENİ v3.0: Seviye Atlama Modalı -->
+<div id="levelUpModal" class="modal-backdrop hidden">
+    <div class="modal-content card">
+        <h2>🎉 SEVİYE ATLADIN! 🎉</h2>
+        <p>Tebrikler, <strong id="levelUpNewLevel">Seviye 2</strong> oldun!</p>
+        <div class="level-up-rewards">
+            <div>🏆 Yeni Seviye: <span id="levelUpNewLevel2">2</span></div>
+            <div>💰 Bakiye Ödülü: +<span id="levelUpCoinReward">60</span> 🪙</div>
+            <div>💡 İpucu Ödülü: +<span id="levelUpHintReward">1</span> 💡</div>
+        </div>
+        <button id="levelUpCloseBtn">Harika!</button>
+    </div>
+</div>
+
+<!-- YENİ v3.0: Firebase Giriş Modalı -->
+<div id="authModal" class="modal-backdrop hidden">
+    <div class="modal-content card" style="max-width: 400px; padding: 25px;">
+        <h2>👤 Çevrimiçi Giriş</h2>
+        <p>İlerlemeni buluta kaydetmek ve liderlik tablosuna girmek için giriş yap!</p>
+        <div id="authError" style="color: var(--bad); margin-bottom: 10px; font-weight: bold;"></div>
+        <input type="email" id="authEmail" placeholder="E-posta" style="width: 100%; margin-bottom: 15px; padding: 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--input-bg); color: var(--text);">
+        <input type="password" id="authPassword" placeholder="Şifre" style="width: 100%; margin-bottom: 15px; padding: 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--input-bg); color: var(--text);">
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+            <button onclick="login()" style="flex: 1;">Giriş Yap</button>
+            <button onclick="register()" class="secondary" style="flex: 1;">Kayıt Ol</button>
+        </div>
+        <button onclick="loginWithGoogle()" style="margin-top: 10px; width: 100%; background: #4285F4; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold;">🌐 Google ile Giriş Yap</button>
+        <button onclick="document.getElementById('authModal').classList.add('hidden')" style="margin-top: 10px; width: 100%; background: var(--bad); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold;">İptal</button>
+        <p style="font-size: 11px; margin-top: 15px; color: var(--text-light); text-align: left;"><b>⚠️ Not:</b> Kod içindeki (firebaseConfig) yapılandırmasını kendi Firebase bilgilerinizle değiştirmediyseniz ve Firebase Console üzerinden <b>E-posta/Şifre</b> ve <b>Google</b> oturum açma yöntemlerini aktifleştirmediyseniz kayıt/giriş işlemi başarısız olur.</p>
+    </div>
+</div>
+
+<script>
+  // --- FIREBASE YAPILANDIRMASI ---
+  // DİKKAT: Kendi Firebase yapılandırma bilgilerinizi buraya yapıştırın.
+  const firebaseConfig = {
+    apiKey: "AIzaSyCR2LWyzcoT2wPwGzS3oF47RnNx6LxZbHE",
+    authDomain: "eglenceli-matematik-oyun-f2396.firebaseapp.com",
+    databaseURL: "https://eglenceli-matematik-oyun-f2396-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "eglenceli-matematik-oyun-f2396",
+    storageBucket: "eglenceli-matematik-oyun-f2396.firebasestorage.app",
+    messagingSenderId: "803199070316",
+    appId: "1:803199070316:web:c56ce976770efee1b5e849",
+    measurementId: "G-E5NFXTYYT8"
+  };
+
+  // Firebase başlatma
+  let database, auth, googleProvider;
+  let currentUser = null;
+  try {
+      firebase.initializeApp(firebaseConfig);
+      database = firebase.database();
+      auth = firebase.auth();
+      googleProvider = new firebase.auth.GoogleAuthProvider();
+      
+      auth.onAuthStateChanged(user => {
+          currentUser = user;
+          const authBtn = document.getElementById('authBtn');
+          if (user) {
+              authBtn.textContent = "👤 Çıkış Yap";
+              authBtn.onclick = logout;
+              loadProfileFromFirebase(user.uid);
+              updateLeaderboard();
+              document.getElementById('authModal').classList.add('hidden');
+          } else {
+              authBtn.textContent = "👤 Giriş Yap";
+              authBtn.onclick = openAuthModal;
+          }
+      });
+  } catch (error) {
+      console.error("Firebase başlatılamadı (Lütfen config ayarlarını yapın):", error);
+  }
+
+  function openAuthModal() {
+      document.getElementById('authError').textContent = "";
+      document.getElementById('authEmail').value = "";
+      document.getElementById('authPassword').value = "";
+      document.getElementById('authModal').classList.remove('hidden');
+  }
+
+  function login() {
+      const email = document.getElementById('authEmail').value;
+      const pass = document.getElementById('authPassword').value;
+      if(auth) {
+          auth.signInWithEmailAndPassword(email, pass).catch(err => {
+              document.getElementById('authError').textContent = err.message;
+          });
+      }
+  }
+
+  function register() {
+      const email = document.getElementById('authEmail').value;
+      const pass = document.getElementById('authPassword').value;
+      if(auth) {
+          auth.createUserWithEmailAndPassword(email, pass).catch(err => {
+              document.getElementById('authError').textContent = err.message;
+          });
+      }
+  }
+
+  function loginWithGoogle() {
+      if(auth) {
+          auth.signInWithPopup(googleProvider).catch(err => {
+              document.getElementById('authError').textContent = "Google Girişi Hatalı: " + err.message;
+          });
+      }
+  }
+
+  function logout() {
+      if(auth) {
+          auth.signOut();
+          notify("Çıkış yapıldı. Yerel profile dönüldü.", true);
+          loadProfileFromLocal(); // Yerel profile dön
+      }
+  }
+
+  function loadProfileFromFirebase(uid) {
+      database.ref('users/' + uid).once('value').then(snapshot => {
+          const p = snapshot.val();
+          if (p) {
+              applyProfileData(p);
+              notify("Bulut profili yüklendi!", true);
+          } else {
+              // Yeni kullanıcı, yerel verileri buluta kaydet
+              saveProfile();
+              notify("Hesap oluşturuldu, veriler buluta eşitlendi!", true);
+          }
+      }).catch(err => console.error("Firebase veri çekme hatası:", err));
+  }
+  
+  function updateLeaderboard() {
+      if(!database) return;
+      database.ref('leaderboard').orderByChild('score').limitToLast(10).on('value', snapshot => {
+          const list = [];
+          snapshot.forEach(child => {
+              list.push(child.val());
+          });
+          list.reverse(); // En yüksek puan en üstte
+          
+          const lbList = document.getElementById("leaderboardList");
+          lbList.innerHTML = "";
+          if(list.length === 0) {
+              lbList.innerHTML = "<p>Henüz kimse skor kaydetmedi.</p>";
+              return;
+          }
+          list.forEach((entry, index) => {
+              const div = document.createElement('div');
+              div.className = "history-item";
+              div.style.display = "flex";
+              div.style.justifyContent = "space-between";
+              let rank = index + 1;
+              let icon = rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : "🎖️";
+              div.innerHTML = `
+                  <div style="font-weight: bold; font-size: 16px; color: var(--accent);">${icon} ${entry.username} (Seviye ${entry.level || 1})</div>
+                  <div style="font-weight: bold;">Skor: ${entry.score}</div>
+              `;
+              lbList.appendChild(div);
+          });
+      });
+  }
+
+  // 🔊 Ses efektleri
+  const correctSound = new Audio("https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg");
+  const wrongSound = new Audio("https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg");
+  const levelUpSound = new Audio("https://actions.google.com/sounds/v1/impacts/wind_chimes.ogg");
+  const buyThemeSound = new Audio("https://actions.google.com/sounds/v1/coins/magic_chime.ogg");
+  
+  // DÜZENLEME: Seslerin daha hızlı yüklenmesi için DOMContentLoaded bekleniyor
+  document.addEventListener('DOMContentLoaded', () => {
+      // Sesleri önceden yüklemeyi dene
+      correctSound.load(); 
+      wrongSound.load();
+      levelUpSound.load();
+      buyThemeSound.load();
+  });
+
+  // --- DOM Elementleri ---
+  const shopEl = document.getElementById("shop");
+  const equationEl = document.getElementById("equation");
+  const answerInput = document.getElementById("answer");
+  const submitBtn = document.getElementById("submit");
+  const skipBtn = document.getElementById("skip");
+  const resultEl = document.getElementById("result");
+  const hintBtn = document.getElementById("hintBtn");
+  const startBtn = document.getElementById("startBtn");
+  const gamePageBtn = document.getElementById("gamePageBtn");
+  const timeBarEl = document.getElementById("timeBar"); 
+  const mathSymbolsBg = document.getElementById("mathSymbolsBg");
+  const soundToggleBtn = document.getElementById("soundToggleBtn"); 
+  // YENİ v3.0: Günlük Ödül Butonu (KALDIRILDI)
+  // const dailyRewardBtn = document.getElementById("dailyRewardBtn");
+  // YENİ v3.0: Seviye Atlama Modalı Elementleri
+  const levelUpModal = document.getElementById("levelUpModal");
+  const levelUpCloseBtn = document.getElementById("levelUpCloseBtn");
+  const levelUpNewLevel = document.getElementById("levelUpNewLevel");
+  const levelUpNewLevel2 = document.getElementById("levelUpNewLevel2");
+  const levelUpCoinReward = document.getElementById("levelUpCoinReward");
+  const levelUpHintReward = document.getElementById("levelUpHintReward");
+  
+  const themeSelector = document.getElementById("themeSelector");
+  const inputNumeric = document.getElementById("input-numeric");
+  const xpBar = document.getElementById("xpBar");
+  const xpText = document.getElementById("xpText");
+  const gameTimerPill = document.getElementById("game-timer-pill");
+  const gameTimeBar = document.getElementById("gameTimeBar");
+  const gameTime = document.getElementById("gameTime");
+  const gameTimeLabel = document.getElementById("gameTimeLabel"); // YENİ v3.0
+  const questionTimerPill = document.getElementById("question-timer-pill");
+  
+  const modeDisplayPill = document.getElementById("mode-display");
+  const modeDisplayText = document.getElementById("modeDisplayText");
+  
+  // DÜZENLEME: Footer elementleri
+  const mainFooter = document.getElementById("main-footer");
+  const homePage = document.getElementById("home");
+
+
+  // Meta Elementler 
+  const scoreEl = document.getElementById("score");
+  const correctEl = document.getElementById("correct");
+  const wrongEl = document.getElementById("wrong");
+  const levelDisplayEl = document.getElementById("levelDisplay");
+  const timeEl = document.getElementById("time");
+  const streakEl = document.getElementById("streak");
+  const shieldsEl = document.getElementById("shields");
+  const skipsEl = document.getElementById("skips"); // YENİ EKLENTİ
+
+  // --- Global Oyun Durumu ---
+  let wallet = 0;
+  let lives = 3;
+  let currentSessionWrongs = [];
+  let adaptiveHistory = [];
+  let currentAdaptiveLevel = 1;
+  let hints = 0;
+  let skipTokens = 0; // YENİ EKLENTİ (Oyun başında verilecek)
+  let isSoundEnabled = true; 
+  let itemsPurchased = 0;
+  let freezeTime = false; 
+  let doubleScoreTurns = 0;
+  let doubleXPTurns = 0; // YENİ v3.0
+  let doubleWalletTurns = 0; // YENİ EKLENTİ
+  let streak = 0;
+  let mulCount = 0; 
+  let timer = null; // Soru zamanlayıcısı
+  let globalTimer = null; // Blitz ve Survival modu zamanlayıcısı
+  let globalTimerLeft = 60;
+  let timeLeft = 0;
+  let initialTime = 0; 
+  let currentProblem = null;
+  let isBlitzMode = false;
+  
+  let isSurvivalMode = false; 
+  let survivalStartTime = 10;
+  let survivalCorrectBonus = 3;
+  let survivalWrongPenalty = 2;
+
+  // XP & Seviye Sistemi
+  let xp = 0;
+  let level = 1;
+  let streakShields = 0;
+  
+  // YENİ v3.0: Günlük Ödül (KALDIRILDI)
+  // let lastLoginDate = null;
+  
+  // YENİ v3.0: Tema Sahipliği
+  // DEĞİŞİKLİK: Tüm temalar ücretsiz yapıldı
+  let ownedThemes = ['light', 'dark', 'matrix', 'retro', 'gold', 'arctic', 'cyberpunk', 'sakura', 'summer']; // BÜTÜN TEMALAR ÜCRETSİZ
+  
+  // YENİ v3.0: Tüm temaların haritası
+  const allThemesMap = {
+      light: '☀️ Aydınlık',
+      dark: '🌙 Karanlık',
+      matrix: '📟 Matrix',
+      retro: '🎨 Retro',
+      gold: '⚜️ Altın',
+      arctic: '❄️ Arktik',
+      cyberpunk: '🌃 Cyberpunk',
+      sakura: '🌸 Sakura',
+      summer: '🏖️ Yaz Tatili' // YENİ TEMA
+  };
+  
+  // YENİ v3.0: Arka plan sembolleri ('∆' kaldırıldı, operatörler çoğaltıldı)
+  const basicOps = ['+', '−', '×', '÷'];
+  const mathSymbols = [
+      ...basicOps, ...basicOps, ...basicOps, ...basicOps, ...basicOps, // Operatörler x5
+      '(', ')', 'x', 'y', 'z', '=', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'π', '√' // Diğer semboller
+  ];
+  const snowflakes = ['❄️', '❅', '❆'];
+  const digitalRain = ['0', '1']; // YENİ v3.0
+  const petals = ['🌸', '❁', '❀']; // YENİ TEMA
+  const summerIcons = ['🏖️', '🌊', '☀️', '🐚', '🦀', '🌴']; // YENİ TEMA
+
+  let gameState = {
+      running: false,
+      mode: "mixed",
+      level: 1,
+      total: -1, 
+      asked: 0,
+      correct: 0,
+      wrong: 0,
+      score: 0,
+  };
+
+  let gameStats = {
+      gamesPlayed: 0,
+      maxScore: 0,
+      totalCorrect: 0,
+      totalWrong: 0,
+      addCorrect: 0, addWrong: 0,
+      subCorrect: 0, subWrong: 0,
+      mulCorrect: 0, mulWrong: 0,
+      divCorrect: 0, divWrong: 0,
+      parenCorrect: 0, parenWrong: 0,
+      missingCorrect: 0, missingWrong: 0,
+      expCorrect: 0, expWrong: 0,
+      algebraCorrect: 0, algebraWrong: 0,
+      blitzCorrect: 0, blitzWrong: 0,
+      survivalCorrect: 0, survivalWrong: 0,
+  };
+  
+  let badges = {
+      "math_genius": { icon: "🧮", name: "Matematik Dahisi", desc: "Toplam 50 doğru cevap!", earned: false, condition: 50, type: 'stats' },
+      "total_100": { icon: "💯", name: "Yüzlük Seri", desc: "Toplam 100 doğru cevap!", earned: false, condition: 100, type: 'stats' },
+      "max_score_500": { icon: "🌟", name: "Yüksek Skor", desc: "Tek oyunda 500 puana ulaş!", earned: false, condition: 500, type: 'score' },
+      "blitz_runner": { icon: "⚡", name: "Blitz Canavarı", desc: "Blitz Modu'nda 20 doğru cevap!", earned: false, condition: 20, type: 'stats' },
+      "survivor_30": { icon: "⏳", name: "Hayatta Kalan", desc: "Survival modunda 30 doğru cevap!", earned: false, condition: 30, type: 'stats' },
+      "add_master": { icon: "➕", name: "Toplama Ustası", desc: "30 toplama işlemini tamamla!", earned: false, condition: 30, type: 'stats' },
+      "sub_master": { icon: "➖", name: "Çıkarma Ustası", desc: "30 çıkarma işlemini tamamla!", earned: false, condition: 30, type: 'stats' },
+      "mul_master": { icon: "✖️", name: "Çarpma Ustası", desc: "25 çarpma işlemini tamamladın!", earned: false, condition: 25, type: 'stats' },
+      "div_master": { icon: "➗", name: "Bölme Ustası", desc: "20 bölme işlemini tamamla!", earned: false, condition: 20, type: 'stats' },
+      "algebra_pro": { icon: "📐", name: "Cebir Profesörü", desc: "15 cebirli ifade sorusunu doğru çöz!", earned: false, condition: 15, type: 'stats' },
+      "exp_power": { icon: "³", name: "Üslerin Gücü", desc: "15 üslü sayı sorusunu doğru çöz!", earned: false, condition: 15, type: 'stats' },
+      "streak5": { icon: "⚡", name: "Seri Başarı", desc: "Art arda 5 doğru cevap!", earned: false, condition: 5, type: 'streak' },
+      "streak_10": { icon: "🔥", name: "Alev Topu", desc: "Art arda 10 doğru cevap ver!", earned: false, condition: 10, type: 'streak' },
+      "rich": { icon: "💰", name: "Zengin Oyuncu", desc: "500 🪙 biriktir!", earned: false, condition: 500, type: 'wallet' },
+      // YENİ EKLENTİ
+      "very_rich": { icon: "💎", name: "Büyük Zengin", desc: "1500 🪙 biriktir!", earned: false, condition: 1500, type: 'wallet' },
+      "pauper": { icon: "🪙", name: "Coin Harcayıcı", desc: "Mağazadan 5 eşya satın al!", earned: false, condition: 5, type: 'purchase' },
+      "level_5": { icon: "🎖️", name: "Seviye 5", desc: "5. Seviye ulaş!", earned: false, condition: 5, type: 'level' },
+      "level_10": { icon: "🏆", name: "Seviye 10", desc: "10. Seviyeye ulaş!", earned: false, condition: 10, type: 'level' }, // YENİ v3.0
+      "level_15": { icon: "👑", name: "Seviye 15", desc: "15. Seviyeye ulaş!", earned: false, condition: 15, type: 'level' }, // YENİ v3.0
+      "collector": { icon: "🎨", name: "Tema Koleksiyoncusu", desc: "Tüm temaları satın al!", earned: false, condition: 9, type: 'themes' }, // YENİ TEMA (8->9)
+  };
+
+  // --- Global Yardımcı Fonksiyonlar ---
+
+  function showPage(pageId) {
+      document.querySelectorAll('.wrap > div').forEach(div => {
+          div.classList.add('hidden');
+      });
+      document.getElementById(pageId).classList.remove('hidden');
+      
+      // DÜZENLEME: Footer görünürlüğünü ayarla
+      if (pageId === 'home') {
+          mainFooter.style.display = 'none'; // Ana sayfada genel footer'ı gizle
+          // Ana sayfa içindeki özel footer (.footer) CSS tarafından zaten yönetiliyor
+      } else {
+          mainFooter.style.display = 'block'; // Diğer sayfalarda genel footer'ı göster
+      }
+      
+      if (pageId === 'home' || pageId === 'how' || pageId === 'about' || pageId === 'stats') {
+          if (gameState.running) {
+              endGame('Oyun durduruldu.');
+          }
+      }
+      shopEl.classList.add('hidden');
+      if (pageId === 'stats') {
+          renderStats();
+      }
+  }
+  
+  function openShop() {
+      shopEl.classList.toggle('hidden');
+      if (!shopEl.classList.contains('hidden')) {
+          updateThemeShopUI();
+      }
+  }
+
+  function startQuickGame(mode) {
+      document.getElementById("mode").value = mode;
+      // YENİ EKLENTİ/DÜZELTME: 'exp' modu için de seviye 2 ayarla
+      document.getElementById("level").value = (mode === 'speed' || mode === 'survival') ? '2' : '1'; 
+      document.getElementById("questionCount").value = (mode === 'speed' || mode === 'survival') ? '-1' : '10';
+      startGame();
+  }
+  
+  // --- Local Storage ve Profil Fonksiyonları ---
+
+  // YENİ v3.0: Profil kaydı güncellendi (Firebase Entegreli)
+  function saveProfile() {
+      const dataToSave = { 
+          wallet, lives, hints, badges, gameStats, isSoundEnabled, itemsPurchased,
+          xp, level, streakShields, ownedThemes, doubleWalletTurns, skipTokens
+      };
+      
+      // Yerel Kayıt
+      localStorage.setItem("mathProfileV3.0", JSON.stringify(dataToSave));
+      
+      // Firebase Kaydı
+      if (currentUser && database) {
+          database.ref('users/' + currentUser.uid).set(dataToSave).catch(err => console.error(err));
+          // Liderlik tablosu güncellemesi (Sadece genel veriler)
+          if(gameStats.maxScore > 0) {
+              database.ref('leaderboard/' + currentUser.uid).set({
+                  username: currentUser.displayName || currentUser.email.split('@')[0],
+                  score: gameStats.maxScore,
+                  level: level
+              }).catch(err => console.error(err));
+          }
+      }
+  }
+  
+  // Verileri uygulamaya işleyen yardımcı fonksiyon
+  function applyProfileData(p) {
+      wallet = p.wallet || 0;
+      lives = p.lives !== undefined ? p.lives : 3;
+      hints = p.hints || 0;
+      skipTokens = p.skipTokens || 0;
+      isSoundEnabled = p.isSoundEnabled !== undefined ? p.isSoundEnabled : true; 
+      itemsPurchased = p.itemsPurchased || 0;
+      
+      xp = p.xp || 0;
+      level = p.level || 1;
+      streakShields = p.streakShields || 0;
+      doubleWalletTurns = p.doubleWalletTurns || 0;
+
+      // Tüm temalar ücretsiz
+      ownedThemes = ['light', 'dark', 'matrix', 'retro', 'gold', 'arctic', 'cyberpunk', 'sakura', 'summer'];
+
+      if (p.gameStats) {
+         Object.assign(gameStats, p.gameStats);
+         if (p.gameStats.speedCorrect !== undefined && gameStats.blitzCorrect === 0) {
+             gameStats.blitzCorrect = p.gameStats.speedCorrect;
+             gameStats.blitzWrong = p.gameStats.speedWrong;
+         }
+      }
+      
+      if (p.badges) {
+          for (let key in p.badges) {
+              if (badges[key] && p.badges[key]) {
+                  badges[key].earned = p.badges[key].earned;
+              }
+          }
+      }
+      
+      updateMeta();
+      renderBadges();
+      updateXPBar();
+      updateThemeSelectorUI();
+  }
+
+  // YENİ v3.0: Yerel Profil yükleme
+  function loadProfileFromLocal() {
+      let d = localStorage.getItem("mathProfileV3.0") || 
+              localStorage.getItem("mathProfileV3.5") || 
+              localStorage.getItem("mathProfileV3.4") || 
+              localStorage.getItem("mathProfileV3.3") || 
+              localStorage.getItem("mathProfileV3");
+              
+      if (d) {
+          let p = JSON.parse(d);
+          applyProfileData(p);
+      } else {
+          updateMeta();
+          renderBadges();
+          updateXPBar();
+          updateThemeSelectorUI();
+      }
+  }
+
+  // YENİ v3.0: Profil yükleme ana fonksiyonu
+  function loadProfile() {
+      // Önce yerel verileri yükle, eğer Firebase auth başarılı olursa firebase'den güncellenir
+      loadProfileFromLocal();
+  }
+
+  // YENİ v3.0: Profil sıfırlama güncellendi
+  function resetProfile() {
+      if (confirm("Emin misin? TÜM ilerlemen (Bakiye, Seviye, İstatistikler, Rozetler) sıfırlanacak! (Satın alınan temalar hariç)")) {
+          
+          localStorage.removeItem("mathProfileV3.0");
+          localStorage.removeItem("mathProfileV3.5");
+          localStorage.removeItem("mathProfileV3.4");
+          localStorage.removeItem("mathProfileV3.3");
+          localStorage.removeItem("mathProfileV3");
+          wallet = 0;
+          lives = 3;
+          hints = 0;
+          skipTokens = 0; // YENİ EKLENTİ
+          itemsPurchased = 0;
+          xp = 0;
+          level = 1;
+          streakShields = 0;
+          doubleWalletTurns = 0; // YENİ EKLENTİ
+          // lastLoginDate = null; // YENİ v3.0 (KALDIRILDI)
+          gameState = { running: false, mode: "mixed", level: 1, total: -1, asked: 0, correct: 0, wrong: 0, score: 0 };
+          
+          gameStats = {
+              gamesPlayed: 0, maxScore: 0, totalCorrect: 0, totalWrong: 0,
+              addCorrect: 0, addWrong: 0, subCorrect: 0, subWrong: 0, mulCorrect: 0, mulWrong: 0, 
+              divCorrect: 0, divWrong: 0, parenCorrect: 0, parenWrong: 0, missingCorrect: 0, missingWrong: 0,
+              expCorrect: 0, expWrong: 0, algebraCorrect: 0, algebraWrong: 0,
+              blitzCorrect: 0, blitzWrong: 0, survivalCorrect: 0, survivalWrong: 0,
+          };
+          for (let k in badges) {
+              badges[k].earned = false;
+          }
+          
+          clearInterval(timer);
+          clearInterval(globalTimer);
+          equationEl.textContent = 'Profil sıfırlandı. Yeni bir başlangıç!';
+          
+          endGame(null); 
+          updateMeta();
+          renderBadges();
+          updateXPBar();
+          updateThemeSelectorUI();
+          // checkDailyReward(); // YENİ v3.0 (KALDIRILDI)
+      }
+  }
+  
+  // YENİ EKLENTİ: Sadece İstatistikleri Sıfırla
+  function resetStats() {
+      if (confirm("Emin misin? Tüm istatistiklerin (Toplam Doğru, Yanlış, Oranlar) ve ilgili rozetlerin sıfırlanacak! (Bakiye, Seviye ve Temalar korunacak)")) {
+          
+          // İstatistikleri sıfırla
+          gameStats = {
+              gamesPlayed: 0, maxScore: 0, totalCorrect: 0, totalWrong: 0,
+              addCorrect: 0, addWrong: 0, subCorrect: 0, subWrong: 0, mulCorrect: 0, mulWrong: 0, 
+              divCorrect: 0, divWrong: 0, parenCorrect: 0, parenWrong: 0, missingCorrect: 0, missingWrong: 0,
+              expCorrect: 0, expWrong: 0, algebraCorrect: 0, algebraWrong: 0,
+              blitzCorrect: 0, blitzWrong: 0, survivalCorrect: 0, survivalWrong: 0,
+          };
+          
+          // İstatistik/skor/seri temelli rozetleri sıfırla
+          for (let k in badges) {
+              let b = badges[k];
+              if (b.type === 'stats' || b.type === 'streak' || b.type === 'score') {
+                   badges[k].earned = false;
+              }
+              // level, wallet, purchase, themes rozetleri kalır
+          }
+          
+          notify("İstatistikler ve ilgili rozetler sıfırlandı.", true);
+          renderBadges();
+          renderStats(); // İstatistikler sayfasını güncelle (eğer açıksa)
+          saveProfile(); // Değişiklikleri kaydet
+      }
+  }
+
+  // --- UI Güncelleme Fonksiyonları ---
+  
+  // YENİ v3.0: Günlük Ödül Fonksiyonları (KALDIRILDI)
+  /*
+  function checkDailyReward() {
+      const today = new Date().toLocaleDateString("tr-TR");
+      if (lastLoginDate !== today) {
+          dailyRewardBtn.disabled = false;
+          dailyRewardBtn.classList.add('ready');
+          dailyRewardBtn.textContent = "🎁 Ödülü Al!";
+      } else {
+          dailyRewardBtn.disabled = true;
+          dailyRewardBtn.classList.remove('ready');
+          dailyRewardBtn.textContent = "🎁 Yarın Gel!";
+      }
+  }
+
+  function claimDailyReward() {
+      if (dailyRewardBtn.disabled) return;
+      
+      const rewardWallet = 50;
+      const rewardHints = 1;
+      
+      wallet += rewardWallet;
+      hints += rewardHints;
+      
+      notify(`🎁 Günlük Ödül: +${rewardWallet} 🪙 ve +${rewardHints} 💡!`, true);
+      celebrate();
+      
+      lastLoginDate = new Date().toLocaleDateString("tr-TR");
+      dailyRewardBtn.disabled = true;
+      dailyRewardBtn.classList.remove('ready');
+      dailyRewardBtn.textContent = "🎁 Yarın Gel!";
+      
+      updateMeta(); // Bakiye, ipucu ve profili kaydetmek için
+  }
+  */
+
+  function getXPForNextLevel(lvl) {
+      return Math.floor(100 * Math.pow(1.2, lvl - 1));
+  }
+
+  function addXP(amount) {
+      if (!gameState.running) return;
+      
+      // YENİ v3.0: 2x XP Kontrolü
+      if (doubleXPTurns > 0) {
+          amount *= 2;
+          doubleXPTurns--;
+          notify(`⚡ 2x XP! Kalan: ${doubleXPTurns} soru.`, true);
+      }
+      
+      xp += amount;
+      let xpNeeded = getXPForNextLevel(level);
+
+      let levelUp = false;
+      while (xp >= xpNeeded) {
+          levelUp = true;
+          xp -= xpNeeded;
+          level++;
+          
+          let coinReward = 50 + (level * 10);
+          let hintReward = 1;
+          wallet += coinReward;
+          hints += hintReward;
+          
+          // YENİ v3.0: Modal'ı tetikle
+          showLevelUpModal(level, coinReward, hintReward);
+          // notify(`🎉 SEVİYE ATLADIN! Seviye ${level}!`, true); // Modal bunu yapacak
+          // notify(`💰 +${coinReward} Bakiye & +${hintReward} İpucu!`, true);
+          
+          if(isSoundEnabled) levelUpSound.play().catch(()=>{});
+
+          xpNeeded = getXPForNextLevel(level);
+      }
+      
+      updateXPBar();
+      checkBadges();
+  }
+
+  function updateXPBar() {
+      const xpNeeded = getXPForNextLevel(level);
+      const percentage = Math.min(100, (xp / xpNeeded) * 100);
+      
+      xpBar.style.width = `${percentage}%`;
+      xpText.textContent = `XP: ${xp} / ${xpNeeded}`;
+      levelDisplayEl.textContent = `${level} 🎖️`;
+  }
+
+  function updateOperationStats(operationType, isCorrect) {
+      if (!currentProblem) return; 
+      
+      const type = operationType === 'mixed' ? currentProblem.type : operationType;
+      const suffix = isCorrect ? 'Correct' : 'Wrong';
+      const key = type + suffix;
+
+      if (gameStats.hasOwnProperty(key)) {
+          gameStats[key]++;
+      }
+      
+      if (isBlitzMode) {
+          gameStats['blitz' + suffix]++;
+      }
+      
+      if (isSurvivalMode) {
+          gameStats['survival' + suffix]++;
+      }
+  }
+
+  function checkBadges() { 
+      if (gameStats.totalCorrect >= badges.math_genius.condition) earnBadge("math_genius"); 
+      if (gameStats.totalCorrect >= badges.total_100.condition) earnBadge("total_100");
+      if (gameStats.mulCorrect >= badges.mul_master.condition) earnBadge("mul_master");
+      if (gameStats.addCorrect >= badges.add_master.condition) earnBadge("add_master");
+      if (gameStats.subCorrect >= badges.sub_master.condition) earnBadge("sub_master");
+      if (gameStats.divCorrect >= badges.div_master.condition) earnBadge("div_master");
+      if (gameStats.blitzCorrect >= badges.blitz_runner.condition) earnBadge("blitz_runner");
+      if (gameStats.survivalCorrect >= badges.survivor_30.condition) earnBadge("survivor_30");
+      if (gameStats.algebraCorrect >= badges.algebra_pro.condition) earnBadge("algebra_pro");
+      if (gameStats.expCorrect >= badges.exp_power.condition) earnBadge("exp_power");
+      if (streak >= badges.streak5.condition) earnBadge("streak5"); 
+      if (streak >= badges.streak_10.condition) earnBadge("streak_10");
+      if (wallet >= badges.rich.condition) earnBadge("rich"); 
+      if (wallet >= badges.very_rich.condition) earnBadge("very_rich"); // YENİ EKLENTİ
+      if (itemsPurchased >= badges.pauper.condition) earnBadge("pauper");
+      if (level >= badges.level_5.condition) earnBadge("level_5");
+      if (level >= badges.level_10.condition) earnBadge("level_10");
+      if (level >= badges.level_15.condition) earnBadge("level_15"); // YENİ v3.0
+      if (ownedThemes.length >= badges.collector.condition) earnBadge("collector");
+  }
+
+  function earnBadge(k) { 
+      let b = badges[k]; 
+      if (b && !b.earned) { 
+          b.earned = true; 
+          renderBadges();
+          notify("🏅 " + b.icon + " " + b.name + " rozetini kazandın!"); 
+          celebrate(); 
+      } 
+  }
+  
+  function createRatioBar(title, correct, wrong) {
+      const total = correct + wrong;
+      if (total === 0) return ""; 
+
+      const ratio = (correct / total) * 100;
+      const ratioText = `${correct} D / ${wrong} Y (${ratio.toFixed(0)}% Başarı)`;
+      
+      const html = `
+          <div class="ratio-item">
+              <div class="ratio-header">
+                  <span>${title}</span>
+                  <span>${ratioText}</span>
+              </div>
+              <progress value="${correct}" max="${total}"></progress>
+              <div class="ratio-text" style="color: #fff; text-shadow: 0 1px 2px #000;">${ratio.toFixed(0)}%</div>
+          </div>
+      `;
+      return html;
+  }
+
+  function renderStats() {
+      document.getElementById("stat-games").textContent = gameStats.gamesPlayed;
+      document.getElementById("stat-max-score").textContent = gameStats.maxScore;
+      document.getElementById("stat-total-correct").textContent = gameStats.totalCorrect;
+      document.getElementById("stat-total-wrong").textContent = gameStats.totalWrong;
+
+      const container = document.getElementById("operationStatsContainer");
+      container.innerHTML = "";
+      
+      const operationMap = {
+          "Toplama (+)" : { c: gameStats.addCorrect, w: gameStats.addWrong },
+          "Çıkarma (-)" : { c: gameStats.subCorrect, w: gameStats.subWrong },
+          "Çarpma (×)" : { c: gameStats.mulCorrect, w: gameStats.mulWrong },
+          "Bölme (÷)" : { c: gameStats.divCorrect, w: gameStats.divWrong },
+          "Parantezli" : { c: gameStats.parenCorrect, w: gameStats.parenWrong },
+          "Eksik Sayı (X)" : { c: gameStats.missingCorrect, w: gameStats.missingWrong },
+          "Üslü Sayılar" : { c: gameStats.expCorrect, w: gameStats.expWrong },
+          "Cebirli İfadeler" : { c: gameStats.algebraCorrect, w: gameStats.algebraWrong },
+          "Blitz Modu" : { c: gameStats.blitzCorrect, w: gameStats.blitzWrong },
+          "Hayatta Kalma" : { c: gameStats.survivalCorrect, w: gameStats.survivalWrong },
+      };
+      for (const [title, data] of Object.entries(operationMap)) {
+          container.innerHTML += createRatioBar(title, data.c, data.w);
+      }
+
+      const totalContainer = document.getElementById("totalRatioContainer");
+      totalContainer.innerHTML = createRatioBar(
+          "Genel Başarı Oranı",
+          gameStats.totalCorrect,
+          gameStats.totalWrong
+      );
+  }
+
+  function updateMeta() {
+      scoreEl.textContent = gameState.score;
+      correctEl.textContent = gameState.correct;
+      wrongEl.textContent = gameState.wrong;
+      streakEl.textContent = streak; 
+      shieldsEl.textContent = streakShields; 
+      skipsEl.textContent = skipTokens; // YENİ EKLENTİ
+
+      document.getElementById("wallet").textContent = wallet;
+      document.getElementById("wallet2").textContent = wallet;
+      document.getElementById("lives").textContent = lives;
+      document.getElementById("hints").textContent = hints;
+      
+      questionTimerPill.style.display = gameState.running && !freezeTime && !isBlitzMode && !isSurvivalMode ? 'flex' : 'none';
+      gameTimerPill.style.display = gameState.running && (isBlitzMode || isSurvivalMode) ? 'flex' : 'none';
+      
+      inputNumeric.classList.toggle('hidden', !gameState.running);
+      
+      answerInput.disabled = !gameState.running;
+      submitBtn.disabled = !gameState.running;
+      skipBtn.disabled = !gameState.running;
+      hintBtn.disabled = !gameState.running || hints <= 0;
+      
+      startBtn.textContent = gameState.running ? "Oyunu Durdur" : "Oyuna Başlat";
+      gamePageBtn.textContent = gameState.running ? "Oyunu Durdur" : "Ayarlar/Başlat";
+      soundToggleBtn.textContent = isSoundEnabled ? "🔊 Ses Açık" : "🔇 Ses Kapalı";
+      soundToggleBtn.classList.toggle('secondary', isSoundEnabled);
+
+      if (gameState.running) {
+          modeDisplayPill.classList.remove('hidden');
+          let modeName = document.getElementById("mode").options[document.getElementById("mode").selectedIndex].text;
+          modeDisplayText.textContent = modeName;
+      } else {
+          modeDisplayPill.classList.add('hidden');
+      }
+
+      saveProfile();
+  }
+
+  function renderBadges() {
+      let cont = document.getElementById("badges");
+      cont.innerHTML = "";
+      for (let k in badges) {
+          let b = badges[k];
+          let div = document.createElement("div");
+          div.className = "badge " + (b.earned ? "earned" : "locked");
+          div.innerHTML = `<div style="font-size:18px">${b.icon}</div><div>${b.name}</div><div style="font-size:12px;color:var(--text-light)">${b.desc}</div>`;
+          cont.appendChild(div);
+      }
+  }
+
+  function updateThemeSelectorUI() {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+      themeSelector.innerHTML = '';
+      
+      for (const themeKey in allThemesMap) {
+          if (ownedThemes.includes(themeKey)) {
+              const option = document.createElement('option');
+              option.value = themeKey;
+              option.textContent = allThemesMap[themeKey];
+              themeSelector.appendChild(option);
+          }
+      }
+      
+      themeSelector.value = currentTheme;
+      updateThemeShopUI();
+  }
+  
+  function updateThemeShopUI() {
+      const purchasableThemes = [
+          { id: 'buy-theme-matrix', key: 'matrix', cost: 150 },
+          { id: 'buy-theme-retro', key: 'retro', cost: 200 },
+          { id: 'buy-theme-gold', key: 'gold', cost: 200 },
+          { id: 'buy-theme-arctic', key: 'arctic', cost: 200 },
+          { id: 'buy-theme-cyberpunk', key: 'cyberpunk', cost: 250 },
+          { id: 'buy-theme-sakura', key: 'sakura', cost: 300 }, // YENİ TEMA
+          { id: 'buy-theme-summer', key: 'summer', cost: 300 }
+      ];
+      
+      purchasableThemes.forEach(theme => {
+          const btn = document.getElementById(theme.id);
+          if (btn) {
+              if (ownedThemes.includes(theme.key)) {
+                  btn.disabled = true;
+                  btn.textContent = "Satın Alındı";
+              } else {
+                  btn.disabled = false;
+                  btn.textContent = `${theme.cost} 🪙`;
+              }
+          }
+      });
+  }
+
+  // YENİ v3.0: setTheme fonksiyonu güncellendi (arka planı yeniden başlatmak için)
+  function setTheme(themeName) {
+      if (!ownedThemes.includes(themeName)) {
+          themeName = 'light'; 
+      }
+      
+      document.documentElement.setAttribute('data-theme', themeName);
+      localStorage.setItem("mathThemeV3.0", themeName);
+      themeSelector.value = themeName;
+      
+      // YENİ v3.0: HATA DÜZELTMESİ - Arka planı tema değişiminde GÜVENLE yeniden başlat
+      setTimeout(() => {
+          // Arka plan sembollerinin rengini temaya göre ayarla
+          const symbolColor = getComputedStyle(document.documentElement).getPropertyValue('--accent');
+          const symbolOpacity = (themeName === 'light' || themeName === 'arctic') ? '0.25' : '0.5';
+          document.querySelectorAll('.math-symbol').forEach(s => {
+              s.style.color = symbolColor;
+              s.style.opacity = symbolOpacity;
+          });
+          
+          initMathSymbols(); // Arka plan sembollerini oluştur (varsayılan 30)
+      }, 50); // CSS değişkenlerinin yüklenmesi için kısa bir gecikme
+  }
+
+  function toggleSound() {
+      isSoundEnabled = !isSoundEnabled;
+      updateMeta();
+      notify(isSoundEnabled ? "Ses efektleri açıldı." : "Ses efektleri kapatıldı.", true);
+  }
+
+  // --- Ses ve Efektler ---
+
+  function celebrate() {
+      if (isSoundEnabled) {
+          correctSound.currentTime = 0;
+          correctSound.play().catch(() => { });
+      }
+      confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
+  }
+
+  function speakWrong() {
+      if (isSoundEnabled) {
+          wrongSound.currentTime = 0;
+          wrongSound.play().catch(() => { });
+      }
+  }
+
+  function notify(message, isGood = true) {
+      let n = document.createElement("div");
+      n.className = "notify";
+      n.style.backgroundColor = isGood ? 'var(--good)' : 'var(--bad)';
+      n.textContent = message;
+      document.body.appendChild(n);
+      setTimeout(() => n.remove(), 3500);
+  }
+
+  // YENİ v3.0: Seviye Atlama Modalı Fonksiyonları
+  function showLevelUpModal(newLvl, coin, hint) {
+      levelUpNewLevel.textContent = `Seviye ${newLvl}`;
+      levelUpNewLevel2.textContent = newLvl;
+      levelUpCoinReward.textContent = coin;
+      levelUpHintReward.textContent = hint;
+      
+      levelUpModal.classList.remove('hidden');
+  }
+
+  function hideLevelUpModal() {
+      levelUpModal.classList.add('hidden');
+  }
+
+  // --- Oyun Mekanikleri ---
+  
+  function randInt(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
+  
+  function pickRange(l) {
+      if (l == 1) return { min: -10, max: 10, absMax: 20 };
+      if (l == 2) return { min: -30, max: 30, absMax: 50 };
+      return { min: -100, max: 100, absMax: 100 };
+  }
+  function sup(n) { 
+    const supMap = { '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹', '-': '⁻' };
+    return String(n).split('').map(c => supMap[c] || c).join('');
+  }
+  function formatAlgebra(n) {
+      return n == 1 ? "x" : n == -1 ? "-x" : n == 0 ? "" : n + "x";
+  }
+
+  function getEffectiveLevel() {
+      if (gameState.level === "adaptive") return currentAdaptiveLevel;
+      return Number(gameState.level);
+  }
+
+  function makeProblem() {
+      const m = gameState.mode;
+      const lvl = getEffectiveLevel();
+      
+      let t;
+      if (m === "speed" || m === "mixed" || m === "survival") {
+          const mixPool = ["add", "sub", "mul", "div", "paren", "missing", "exp", "algebra"];
+          t = mixPool[randInt(0, mixPool.length - 1)];
+      } else {
+          t = m;
+      }
+
+      const range = pickRange(lvl);
+      let a, b, ans, op, text;
+      
+      if (t === "paren") {
+          let x = randInt(-10, 10), y = randInt(-10, 10), z = randInt(-5, 5);
+          if (randInt(0, 1) === 0) {
+              let parOp = randInt(0, 1) === 0 ? "+" : "-";
+              ans = parOp === "+" ? (x + y) * z : (x - y) * z;
+              text = `${z} × (${x < 0 ? "(" + x + ")" : x} ${parOp} ${y < 0 ? "(" + y + ")" : y})`;
+          } else {
+              let parOp1 = randInt(0, 1) === 0 ? "+" : "-";
+              let parOp2 = randInt(0, 1) === 0 ? "+" : "-";
+              let inner = parOp2 === "+" ? y + z : y - z;
+              ans = parOp1 === "+" ? x + inner : x - inner;
+              text = `${x < 0 ? "(" + x + ")" : x} ${parOp1} (${y < 0 ? "(" + y + ")" : y} ${parOp2} ${z < 0 ? "(" + z + ")" : z})`;
+          }
+      } else if (t === "algebra") {
+          let c1 = randInt(-10, 10);
+          let c2 = randInt(-10, 10);
+          while (c1 === 0 && c2 === 0) { c1 = randInt(-10, 10); c2 = randInt(-10, 10); }
+          if (randInt(0, 1) === 0) {
+              ans = c1 + c2; 
+              text = `${formatAlgebra(c1)} + ${c2 < 0 ? "(" + formatAlgebra(c2) + ")" : formatAlgebra(c2)}`;
+          } else {
+              ans = c1 - c2; 
+              text = `${formatAlgebra(c1)} - ${c2 < 0 ? "(" + formatAlgebra(c2) + ")" : formatAlgebra(c2)}`;
+          }
+          text = `${text} = ?`;
+          currentProblem = { text: text, ans: ans, type: t, resultText: formatAlgebra(ans) }; 
+          return currentProblem;
+      } else if (t === "exp") {
+          let baseRange = (lvl == 1) ? 4 : (lvl == 2) ? 6 : 8;
+          let maxExp = (lvl == 1) ? 3 : (lvl == 2) ? 4 : 5;
+          let exponent = randInt(2, maxExp); 
+          if (lvl === 3 && randInt(0, 5) === 0) exponent = 0;
+          let base = randInt(-1 * baseRange, baseRange); 
+          if ((base === 0 && exponent === 0) || Math.abs(base) === 1) return makeProblem();
+          ans = Math.pow(base, exponent); 
+          if (ans > 2000 || ans < -2000) return makeProblem();
+          text = `${base < 0 || base === 0 ? "(" + base + ")" : base}${sup(exponent)}`;
+      } else if (t === "missing") {
+          a = randInt(range.min, range.max);
+          let opType = ["add", "sub", "mul"][randInt(0, 2)];
+          op = opType === "add" ? "+" : opType === "sub" ? "-" : "×";
+          let result;
+          if (opType === "add") result = a + randInt(range.min, range.max);
+          else if (opType === "sub") result = a - randInt(range.min, range.max);
+          else {
+              b = randInt(-5, 5);
+              if (b === 0) b = 1;
+              result = a * b;
+          }
+          if (randInt(0, 1) === 0) {
+              text = `${a < 0 ? "(" + a + ")" : a} ${op} X = ${result}`;
+              ans = opType === "add" ? result - a : opType === "sub" ? a - result : result / a;
+          } else {
+              text = `X ${op} ${a < 0 ? "(" + a + ")" : a} = ${result}`;
+              ans = opType === "add" ? result - a : opType === "sub" ? result + a : result / a;
+          }
+          if (ans % 1 !== 0) return makeProblem();
+          
+      } else { // Basit İşlemler
+          a = randInt(range.min, range.max);
+          b = randInt(range.min, range.max);
+          switch (t) { 
+              case "add": op = "+"; ans = a + b; break;
+              case "sub": op = "-"; ans = a - b; break; 
+              case "mul": 
+                  a = randInt(-10, 10); b = randInt(-10, 10);
+                  op = "×"; ans = a * b; break;
+              case "div": 
+                  let divisor = randInt(1, lvl === 3 ? 10 : 5);
+                  if (randInt(0, 1) === 0) divisor *= -1; 
+                  ans = randInt(-10, 10); 
+                  a = divisor * ans; 
+                  b = divisor;
+                  op = "÷"; 
+                  if (b === 0) return makeProblem(); 
+                  break;
+          }
+          text = `${a < 0 ? "(" + a + ")" : a} ${op} ${b < 0 ? "(" + b + ")" : b}`;
+      }
+      
+      if (t === "mul") mulCount++;
+      
+      return { text: text + (t !== "missing" && t !== "exp" && t !== "algebra" ? " = ?" : ""), ans: ans, type: t };
+  }
+
+  function loseLife() {
+      lives--;
+      if (lives <= 0) {
+          endGame("Tüm canlar bitti! Skor: " + gameState.score);
+      }
+      updateMeta();
+  }
+  
+  function recordAdaptive(isCorrect) {
+      if (gameState.level !== "adaptive") return;
+      adaptiveHistory.push(isCorrect);
+      if (adaptiveHistory.length > 10) {
+          adaptiveHistory.shift();
+      }
+      
+      if (adaptiveHistory.length >= 5) {
+          let correctCount = adaptiveHistory.filter(x => x).length;
+          let ratio = correctCount / adaptiveHistory.length;
+          
+          if (ratio >= 0.8 && currentAdaptiveLevel < 3) {
+              currentAdaptiveLevel++;
+              notify(`🤖 AI: Başarılısın! Zorluk seviyesi ${currentAdaptiveLevel}'e yükseltildi.`, true);
+              adaptiveHistory = []; 
+          } else if (ratio <= 0.4 && currentAdaptiveLevel > 1) {
+              currentAdaptiveLevel--;
+              notify(`🤖 AI: Zorlandığını fark ettim. Zorluk seviyesi ${currentAdaptiveLevel}'e düşürüldü.`, false);
+              adaptiveHistory = [];
+          }
+      }
+  }
+
+  function handleWrongAnswer(correctAnswer) {
+      gameState.wrong++;
+      recordAdaptive(false);
+      
+      currentSessionWrongs.push({
+          question: currentProblem.text,
+          userAnswer: answerInput.value,
+          correctAnswer: correctAnswer,
+          type: currentProblem.type,
+          resultText: currentProblem.resultText
+      });
+      
+      gameState.score = Math.max(0, gameState.score - 5);
+      
+      if (streakShields > 0) {
+          streakShields--;
+          notify("🛡️ Seri Kalkanı kullanıldı! Seri korunuyor.", true);
+      } else {
+          streak = 0;
+      }
+      
+      gameStats.totalWrong++;
+      updateOperationStats(currentProblem.type, false);
+      
+      let resultMessage;
+      if (currentProblem.type === 'algebra') {
+          resultMessage = `❌ Yanlış! Doğru cevap: ${currentProblem.resultText} (Yani katsayısı ${correctAnswer})`;
+      } else { 
+          resultMessage = `❌ Yanlış! Doğru cevap: ${correctAnswer}`; 
+      }
+      resultEl.textContent = resultMessage;
+      
+      speakWrong(); 
+      if (!isBlitzMode && !isSurvivalMode) loseLife();
+      
+      equationEl.classList.add('wrong-flash', 'wrong-shake');
+      setTimeout(() => equationEl.classList.remove('wrong-flash', 'wrong-shake'), 400);
+
+      answerInput.value = ""; 
+      answerInput.focus(); 
+      currentProblem = null; 
+      const timeout = 1500; 
+      setTimeout(nextQuestion, timeout); 
+      
+      if (isSurvivalMode) {
+          globalTimerLeft -= survivalWrongPenalty;
+          notify(`-${survivalWrongPenalty} Saniye!`, false);
+          updateGameTimerUI();
+          if (globalTimerLeft <= 0) {
+              globalTimerLeft = 0;
+              endGame(`⏳ Süre Bitti! Skor: ${gameState.score}`);
+          }
+      }
+  }
+  
+  function handleCorrectAnswer() {
+      gameState.correct++;
+      recordAdaptive(true);
+      let pts = 10;
+      if (doubleScoreTurns > 0) { 
+          pts *= 2; 
+          doubleScoreTurns--; 
+          notify(`🔥 2x Puan! Kalan: ${doubleScoreTurns} soru.`, true);
+      }
+      streak++;
+      if (streak % 5 === 0) { 
+          pts += 5 * streak; 
+          notify(`🔥 ${streak} Serisi! Bonus +${5*streak} puan!`, true); 
+      }
+      gameState.score += pts;
+      
+      const effectiveLevel = getEffectiveLevel();
+      let bakiyeKazan = 10; // Seviye 1 (Basit)
+      if (effectiveLevel === 2) { // Seviye 2 (Orta)
+          bakiyeKazan = 15;
+      } else if (effectiveLevel === 3) { // Seviye 3 (Zor)
+          bakiyeKazan = 20;
+      }
+      if (isBlitzMode || isSurvivalMode) {
+          bakiyeKazan = 15;
+      }
+      
+      // YENİ EKLENTİ: 2x Bakiye Kontrolü
+      if (doubleWalletTurns > 0) {
+          bakiyeKazan *= 2;
+          doubleWalletTurns--;
+          notify(`💰 2x Bakiye! Kalan: ${doubleWalletTurns} soru.`, true);
+      }
+      
+      wallet += bakiyeKazan;
+
+      let xpGained = 5 + (effectiveLevel * 3) + (currentProblem.type === 'algebra' ? 5 : 0);
+      addXP(xpGained);
+
+      gameStats.totalCorrect++;
+      updateOperationStats(currentProblem.type, true);
+      
+      resultEl.textContent = "✅ Doğru!";
+      celebrate();
+      equationEl.classList.add('correct-flash');
+      setTimeout(() => equationEl.classList.remove('correct-flash'), 400);
+      
+      currentProblem = null;
+      const timeout = (isBlitzMode || isSurvivalMode) ? 200 : 700;
+      setTimeout(nextQuestion, timeout);
+      
+      if (isSurvivalMode) {
+          globalTimerLeft += survivalCorrectBonus;
+          notify(`+${survivalCorrectBonus} Saniye! ⏱️`, true);
+          updateGameTimerUI();
+      }
+  }
+
+  function checkAnswer() {
+      if (!gameState.running || currentProblem === null) return;
+      
+      const correctAnswer = currentProblem.ans;
+      let userAnswer = Number(answerInput.value);
+      if (answerInput.value.trim() === "") return; 
+
+      clearInterval(timer);
+      
+      if (userAnswer === correctAnswer) { 
+          handleCorrectAnswer(); 
+      } else { 
+          handleWrongAnswer(correctAnswer); 
+      }
+      
+      updateMeta();
+  }
+
+  function nextQuestion() {
+      if (!gameState.running) return;
+      
+      if ((isBlitzMode || isSurvivalMode) && globalTimerLeft <= 0) {
+          return;
+      }
+      
+      if (gameState.total !== -1 && gameState.asked >= gameState.total) { 
+          endGame(`Tur bitti! ${gameState.correct} doğru ile Skor: ${gameState.score}`);
+          return; 
+      } 
+
+      gameState.asked++; 
+      currentProblem = makeProblem(); 
+      equationEl.innerHTML = currentProblem.text; 
+      answerInput.value = ""; 
+      resultEl.textContent = ""; 
+      
+      answerInput.focus();
+      
+      startTimer();
+      updateMeta();
+  }
+
+  // YENİ DÜZENLEME: Pas Hakkı Fonksiyonu
+  function skipQuestion() {
+      if (!gameState.running || currentProblem === null) return;
+      clearInterval(timer);
+      
+      // YENİ EKLENTİ: Pas Hakkı Kontrolü
+      if (skipTokens > 0) {
+          skipTokens--;
+          notify("🎟️ Pas hakkı kullanıldı! Soru atlanıyor.", true);
+          
+          // Sadece soruyu atla, ceza yok
+          currentProblem = null; 
+          setTimeout(nextQuestion, 700); // Kısa bekleme
+          updateMeta(); // Pas hakkı sayısını güncelle
+          return; // Fonksiyondan çık
+      }
+
+      // --- Pas hakkı yoksa normal ceza uygulanır ---
+      // (Pas hakkı yoksa, kullanıcıya bildirim ver)
+      notify("🎟️ Kullanılabilir pas hakkınız yok!", false);
+      
+      /* // VEYA: Pas hakkı yoksa eski cezalı sisteme dön
+      
+      gameState.asked++;
+      gameState.wrong++;
+      gameState.score = Math.max(0, gameState.score - 2);
+      
+      if (streakShields > 0) {
+          streakShields--;
+          notify("🛡️ Seri Kalkanı PAS için kullanıldı! Seri korunuyor.", true);
+      } else {
+          streak = 0;
+      }
+      
+      gameStats.totalWrong++;
+      updateOperationStats(currentProblem.type, false);
+      
+      let skipMessage = `PAS! Doğru cevap: ${currentProblem.ans}`; 
+      if (currentProblem.type === 'algebra') { 
+          skipMessage = `PAS! Doğru cevap: ${currentProblem.resultText} (Yani katsayısı ${currentProblem.ans})`; 
+      }
+      resultEl.textContent = skipMessage; 
+      speakWrong();
+      
+      if (!isBlitzMode && !isSurvivalMode) loseLife();
+
+      if (isSurvivalMode) {
+          globalTimerLeft -= survivalWrongPenalty;
+          notify(`PAS! -${survivalWrongPenalty} Saniye!`, false);
+          updateGameTimerUI();
+          if (globalTimerLeft <= 0) {
+              globalTimerLeft = 0;
+              endGame(`⏳ Süre Bitti! Skor: ${gameState.score}`);
+          }
+      }
+
+      currentProblem = null; 
+      setTimeout(nextQuestion, 1500); 
+      */
+  }
+  
+  function useHint() { 
+      if (hints > 0 && currentProblem) { 
+          hints--;
+          const ans = currentProblem.ans; 
+          let hintText = ""; 
+          const firstChar = String(ans).charAt(0);
+          if (currentProblem.type === 'algebra') { 
+              hintText = `Cebirli ifade sadeleşmiş haliyle katsayısı ${firstChar} ile başlıyor.`;
+          } else {
+              hintText = `Cevap: ${firstChar} ile başlıyor.`;
+          }
+          notify("💡 İpucu: " + hintText, true);
+          updateMeta(); 
+      } else if (currentProblem) {
+          notify("Yeterli ipucu hakkınız yok. Mağazadan satın alın!", false);
+      }
+  }
+
+  function showWrongHistory() {
+      const listEl = document.getElementById("wrongHistoryList");
+      listEl.innerHTML = "";
+      
+      currentSessionWrongs.forEach((item) => {
+          let div = document.createElement('div');
+          div.className = "history-item";
+          
+          let qDiv = document.createElement('div');
+          qDiv.className = "history-question";
+          qDiv.textContent = `Soru: ${item.question.replace(' = ?', '')} = ?`;
+          
+          let ansDiv = document.createElement('div');
+          ansDiv.className = "history-answers";
+          ansDiv.innerHTML = `<span style="color: var(--bad);">Senin Cevabın: ${item.userAnswer || "Boş/Pas"}</span> | <span style="color: var(--good);">Doğru Cevap: ${item.correctAnswer}</span>`;
+          
+          let expDiv = document.createElement('div');
+          expDiv.className = "history-explanation hidden";
+          
+          let explanation = "";
+          switch(item.type) {
+              case "add": case "sub": case "mul": case "div":
+                  explanation = "Temel işlem kuralı: İşaretlere dikkat et. Aynı işaretlilerin çarpımı/bölümü pozitif, zıt işaretliler negatif olur. Toplama ve çıkarmada büyüklükleri ve işaretleri doğru hesaplamalısın.";
+                  break;
+              case "paren":
+                  explanation = "İşlem Önceliği Kuralı: Önce parantez içindeki işlemler yapılır, ardından çarpma/bölme, en son toplama/çıkarma işlemleri gerçekleştirilir.";
+                  break;
+              case "algebra":
+                  explanation = `Cebirsel ifadelerde benzer terimlerin (x'li terimler) katsayıları toplanır veya çıkarılır. Burada doğru katsayı ${item.correctAnswer} olmalıydı.`;
+                  break;
+              case "exp":
+                  explanation = "Üslü sayılarda, tabandaki sayı kendisi ile üs kadar çarpılır. Negatif bir sayının çift kuvveti pozitif, tek kuvveti negatiftir.";
+                  break;
+              case "missing":
+                  explanation = "Bilinmeyeni (X) bulmak için, eşitsizliğin diğer tarafına işlemi tersine çevirerek atmalısın (örneğin toplama ise çıkarma olarak geçer).";
+                  break;
+              default:
+                  explanation = "Daha dikkatli olmalısın. İşaretlere ve işlemlere tekrar göz at.";
+          }
+          expDiv.textContent = "💡 Açıklama: " + explanation;
+          
+          div.appendChild(qDiv);
+          div.appendChild(ansDiv);
+          div.appendChild(expDiv);
+          
+          div.onclick = () => {
+              expDiv.classList.toggle('hidden');
+          };
+          
+          listEl.appendChild(div);
+      });
+      
+      document.getElementById("wrongHistoryModal").classList.remove('hidden');
+  }
+
+  function endGame(message) { 
+      clearInterval(timer); 
+      clearInterval(globalTimer);
+      globalTimer = null;
+      hideLevelUpModal(); // YENİ v3.0
+      
+      if (message) { 
+          equationEl.textContent = message;
+          if (message.includes('Bitti') || message.includes('Tur bitti')) {
+              gameStats.maxScore = Math.max(gameStats.maxScore, gameState.score);
+              gameStats.gamesPlayed++;
+              
+              if (gameState.score >= badges.max_score_500.condition) {
+                   earnBadge("max_score_500");
+              }
+              
+              if (message.includes('Game Over') || message.includes('Süre Bitti')) {
+                  notify("Oyun Bitti! Profilini kontrol et.", false);
+              } else {
+                  celebrate();
+                  notify("Tebrikler! İstatistiklerini kontrol et.", true);
+              }
+              
+              if (currentSessionWrongs.length > 0) {
+                  let btn = document.createElement('button');
+                  btn.textContent = "🧐 Yaptığım Hataları Gör";
+                  btn.className = "secondary";
+                  btn.style.marginTop = "15px";
+                  btn.style.width = "100%";
+                  btn.style.fontSize = "18px";
+                  btn.onclick = showWrongHistory;
+                  equationEl.appendChild(document.createElement('br'));
+                  equationEl.appendChild(btn);
+              }
+
+          } else {
+              notify(message, false);
+          }
+      } else {
+          equationEl.textContent = 'Oyun Durduruldu.';
+      }
+      
+      gameState.running = false; 
+      resultEl.textContent = ""; 
+      timeEl.textContent = "—"; 
+      currentProblem = null;
+      isBlitzMode = false;
+      isSurvivalMode = false;
+      updateMeta(); 
+  }
+
+  function buyItem(item, cost) {
+      
+      // Tema satın alma
+      if (item.startsWith('theme_')) {
+          const themeName = item.split('_')[1];
+          if (ownedThemes.includes(themeName)) {
+              notify("Bu temaya zaten sahipsin!", false);
+              return;
+          }
+          if (wallet < cost) {
+              notify("Yetersiz Bakiye!", false);
+              return;
+          }
+          
+          wallet -= cost;
+          ownedThemes.push(themeName);
+          notify(`🎨 ${allThemesMap[themeName]} teması satın alındı!`, true);
+          if(isSoundEnabled) buyThemeSound.play().catch(()=>{});
+          
+          updateThemeSelectorUI();
+          setTheme(themeName);
+          checkBadges();
+          updateMeta();
+          return;
+      }
+      
+      // Diğer eşyalar
+      if (wallet < cost) {
+          notify("Yetersiz Bakiye! Daha çok soru çözmelisin.", false);
+          return;
+      }
+      wallet -= cost; 
+      itemsPurchased++;
+      let message = ""; 
+      switch(item) { 
+          case 'life': lives += 1; message = "❤️ Ekstra Can satın alındı!"; break; 
+          case 'hint': hints += 1; message = "💡 İpucu Hakkı satın alındı!"; break; 
+          case 'shield': streakShields += 1; message = "🛡️ Seri Kalkanı satın alındı!"; break;
+          // case 'skip_token': skipTokens += 1; message = "🎟️ Pas Geçme Hakkı satın alındı!"; break; // YENİ DÜZENLEME: KALDIRILDI
+          case 'konfeti': confetti({ particleCount: 200, spread: 180, origin: { y: 0.5 } });
+          message = "🎉 Süper Konfeti! Kutlama zamanı!"; break; 
+          case 'freeze': 
+          freezeTime = true;
+          message = "⏱️ Zaman Dondurucu aktif edildi! (1 Soru)"; break; // Açıklama eklendi
+          case 'double': 
+          doubleScoreTurns = 5;
+          message = "🔥 2x Puan Gücü aktif edildi! (5 Soru)"; break; // Açıklama eklendi
+          // YENİ v3.0
+          case 'double_xp':
+          doubleXPTurns = 5;
+          message = "⚡ 2x XP Gücü aktif edildi! (5 Soru)"; break; // Açıklama eklendi
+          // YENİ EKLENTİ
+          case 'double_wallet':
+          doubleWalletTurns = 5;
+          message = "💰 2x Bakiye aktif edildi! (5 Soru)"; break; // Açıklama eklendi
+          default: 
+            wallet += cost;
+            itemsPurchased--;
+            return; 
+      } 
+      
+      // YENİ v3.0: Tüm başarılı alımlarda ses çal (temalar hariç, onlar kendi sesine sahip)
+      if(isSoundEnabled) buyThemeSound.play().catch(()=>{});
+      
+      checkBadges();
+      notify(message, true); 
+      updateMeta(); 
+  }
+
+  // --- Zamanlayıcılar --- 
+
+  function updateGameTimerUI() {
+      gameTime.textContent = globalTimerLeft + "s";
+      
+      let maxTime = 60; // Blitz için varsayılan
+      if (isSurvivalMode) {
+          maxTime = survivalStartTime + (10 * (survivalCorrectBonus / 2));
+          if (globalTimerLeft > maxTime) {
+              maxTime = globalTimerLeft;
+          }
+      }
+      
+      const percentage = (globalTimerLeft / maxTime) * 100;
+      gameTimeBar.style.width = Math.min(100, percentage) + '%';
+      
+      if (percentage < 30) { 
+          gameTimeBar.style.backgroundColor = 'var(--bad)'; 
+      } else if (percentage < 60) { 
+          gameTimeBar.style.backgroundColor = 'var(--header)'; 
+      } else { 
+          gameTimeBar.style.backgroundColor = 'var(--accent-dark)'; 
+      }
+  }
+
+  function startTimer() { 
+      clearInterval(timer); 
+
+      if (isBlitzMode || isSurvivalMode) {
+          timeEl.textContent = "∞";
+          timeBarEl.style.width = '100%';
+          return;
+      }
+      
+      if (freezeTime) { 
+          timeEl.textContent = "∞"; 
+          timeBarEl.style.width = '100%'; 
+          timeBarEl.style.backgroundColor = 'var(--accent)';
+          freezeTime = false; 
+          updateMeta(); 
+          return;
+      } 
+      
+      // YENİ v3.0: Seviye 1: 15s, Seviye 2: 25s, Seviye 3: 45s
+      const effectiveLevel = getEffectiveLevel();
+      if (effectiveLevel === 1) timeLeft = 15; 
+      else if (effectiveLevel === 2) timeLeft = 25;
+      else if (effectiveLevel === 3) timeLeft = 45; 
+      
+      initialTime = timeLeft; 
+      timeEl.textContent = timeLeft + " sn"; 
+      timeBarEl.style.width = '100%';
+      timeBarEl.style.backgroundColor = 'var(--good)'; 
+      
+      timer = setInterval(() => { 
+          timeLeft--; 
+          timeEl.textContent = timeLeft + " sn"; 
+          const percentage = (timeLeft / initialTime) * 100; 
+          timeBarEl.style.width = percentage + '%'; 
+          
+          if (percentage < 30) { 
+              timeBarEl.style.backgroundColor = 'var(--bad)'; 
+          } else if (percentage < 60) { 
+              timeBarEl.style.backgroundColor = 'var(--header)'; 
+          } else { 
+              timeBarEl.style.backgroundColor = 'var(--good)'; 
+          } 
+          
+          if (timeLeft <= 0) { 
+              clearInterval(timer); 
+              handleWrongAnswer(currentProblem.ans);
+              notify("Süre doldu!", false); 
+          } 
+      }, 1000); 
+  }
+
+  function startGame() { 
+      if(gameState.running) { 
+          endGame('Oyun durduruldu.'); 
+          return; 
+      } 
+      clearInterval(timer);
+      clearInterval(globalTimer);
+      
+      const selectedMode = document.getElementById("mode").value; 
+      gameState.running = true; 
+      gameState.mode = selectedMode; 
+      gameState.level = document.getElementById("level").value; 
+      isBlitzMode = (selectedMode === "speed"); 
+      isSurvivalMode = (selectedMode === "survival");
+      
+      currentSessionWrongs = []; // Yeni oyun için geçmişi temizle
+      if (gameState.level === "adaptive") {
+          currentAdaptiveLevel = 1; 
+          adaptiveHistory = []; 
+      }
+
+      if (isBlitzMode) { 
+          gameState.total = -1;
+          document.getElementById("questionCount").value = "-1";
+          notify("⚡ Blitz Modu başladı! 60 Saniyen var!", true); 
+          gameTimeLabel.textContent = "Kalan Oyun Süresi:";
+          
+          globalTimerLeft = 60;
+          updateGameTimerUI();
+          globalTimer = setInterval(() => {
+              globalTimerLeft--;
+              updateGameTimerUI();
+              if (globalTimerLeft <= 0) {
+                  endGame(`⚡ Blitz Modu Bitti! Skor: ${gameState.score}`);
+              }
+          }, 1000);
+
+      } 
+      else if (isSurvivalMode) {
+          gameState.total = -1;
+          document.getElementById("questionCount").value = "-1";
+          notify("⏳ Hayatta Kalma Modu başladı! Süreye dikkat et!", true); 
+          gameTimeLabel.textContent = "Kalan Süre: ⏳"; // YENİ v3.0
+          
+          globalTimerLeft = survivalStartTime;
+          // DÜZELTME: updateGameTimeUI -> updateGameTimerUI
+          updateGameTimerUI();
+          globalTimer = setInterval(() => {
+              globalTimerLeft--;
+              // DÜZELTME: updateGameTimeUI -> updateGameTimerUI
+              updateGameTimerUI();
+              if (globalTimerLeft <= 0) {
+                  endGame(`⏳ Süre Bitti! Skor: ${gameState.score}`);
+              }
+          }, 1000);
+
+      } else {
+          gameState.total = Number(document.getElementById("questionCount").value);
+          gameTimeLabel.textContent = "Kalan Oyun Süresi:"; // YENİ v3.0 (Varsayılan)
+      }
+
+      gameState.asked = 0; 
+      gameState.correct = 0; 
+      gameState.wrong = 0;
+      gameState.score = 0; 
+      lives = 3; 
+      streak = 0; 
+      mulCount = 0;
+      freezeTime = false; 
+      doubleScoreTurns = 0; 
+      doubleXPTurns = 0; // YENİ v3.0: Sıfırla
+      doubleWalletTurns = 0; // YENİ EKLENTİ
+      skipTokens = 3; // YENİ DÜZENLEME: Her oyun başında 3 pas hakkı
+      
+      nextQuestion();
+      showPage('game'); 
+  }
+
+  // --- Arka Plan Animasyonu ---
+
+  // YENİ v3.0: Arka plan sembol oluşturucu (Temaya göre değişir)
+  function createMathSymbol() {
+      const symbol = document.createElement('div');
+      symbol.classList.add('math-symbol');
+      
+      // YENİ v3.0: Yatay pozisyon düzeltmesi (Tüm ekran genişliğine yay)
+      const startX = randInt(0, window.innerWidth);
+      symbol.style.left = `${startX}px`;
+            
+      const themeName = document.documentElement.getAttribute('data-theme') || 'light';
+      
+      let duration = randInt(20, 40);
+      let delay = randInt(0, 20);
+      // YENİ v3.0: Boyut aralığı genişletildi (2-4 -> 2-6)
+      let fontSize = randInt(2, 6);
+      
+      if (themeName === 'arctic') {
+          symbol.textContent = snowflakes[randInt(0, snowflakes.length - 1)];
+          symbol.style.animationName = 'fall-digital'; // Düz düşüş
+          duration = randInt(15, 30);
+      } 
+      // YENİ v3.0: Cyberpunk Dijital Yağmur
+      else if (themeName === 'cyberpunk') {
+          symbol.textContent = digitalRain[randInt(0, digitalRain.length - 1)];
+          symbol.style.animationName = 'fall-digital'; // Düz (Matrix tarzı)
+          // Rastgele Cyan veya Sarı renk
+          symbol.style.color = randInt(0, 1) === 0 ? 'var(--accent)' : 'var(--good)'; 
+          duration = randInt(5, 15); // Hızlı yağmur
+          // YENİ v3.0: Boyut aralığı genişletildi (1-3 -> 1-4)
+          fontSize = randInt(1, 4);
+          delay = randInt(0, 5);
+      } 
+      // YENİ TEMA: Sakura
+      else if (themeName === 'sakura') {
+          symbol.textContent = petals[randInt(0, petals.length - 1)];
+          symbol.style.animationName = 'fall-flutter';
+          symbol.style.color = randInt(0, 1) === 0 ? 'var(--accent)' : '#fdebf3'; // Pink and light pink/white
+          duration = randInt(10, 20);
+          delay = randInt(0, 15);
+          fontSize = randInt(1, 3);
+      }
+      // YENİ TEMA: Yaz Tatili
+      else if (themeName === 'summer') {
+          symbol.textContent = summerIcons[randInt(0, summerIcons.length - 1)];
+          symbol.style.animationName = 'fall-flutter';
+          duration = randInt(12, 22);
+          delay = randInt(0, 15);
+          fontSize = randInt(2, 4);
+      }
+      else {
+          symbol.textContent = mathSymbols[randInt(0, mathSymbols.length - 1)];
+          symbol.style.animationName = 'fall'; // Varsayılan dönerek düşüş
+      }
+      
+      symbol.style.animationDuration = `${duration}s`;
+      symbol.style.animationDelay = `${delay}s`;
+      symbol.style.fontSize = `${fontSize}em`;
+      
+      // Temanın --accent rengini ve opaklığını al
+      const symbolColor = getComputedStyle(document.documentElement).getPropertyValue('--accent');
+      let symbolOpacity = (themeName === 'light' || themeName === 'arctic') ? '0.25' : '0.5';
+      if (themeName === 'summer') symbolOpacity = '0.4';
+      
+      // Cyberpunk, Sakura ve Summer emojileri kendi renklerini belirler
+      if (themeName !== 'cyberpunk' && themeName !== 'sakura' && themeName !== 'summer') {
+        symbol.style.color = symbolColor;
+        symbol.style.opacity = symbolOpacity;
+      } else if (themeName === 'summer') {
+        symbol.style.opacity = symbolOpacity;
+      }
+
+      mathSymbolsBg.appendChild(symbol);
+
+      symbol.addEventListener('animationend', () => {
+          symbol.remove();
+          // YENİ v3.0: Sembol sayısını 30 ile sınırlı tut (artırıldı)
+          if(document.querySelectorAll('.math-symbol').length < 30) { 
+              createMathSymbol();
+          }
+      });
+  }
+
+  // YENİ v3.0: Varsayılan sembol sayısı 30'a yükseltildi
+  function initMathSymbols(count = 30) {
+      mathSymbolsBg.innerHTML = '';
+      for (let i = 0; i < count; i++) {
+          createMathSymbol();
+      }
+  }
+
+
+  // --- Olay Dinleyicileri ve Başlangıç İşlemleri ---
+
+  submitBtn.addEventListener('click', checkAnswer);
+  
+  answerInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+          e.preventDefault(); 
+          if(currentProblem) {
+              checkAnswer();
+          }
+      }
+  });
+
+  skipBtn.addEventListener('click', skipQuestion);
+  hintBtn.addEventListener('click', useHint);
+  startBtn.addEventListener('click', startGame);
+  soundToggleBtn.addEventListener('click', toggleSound); 
+  // YENİ v3.0: Günlük Ödül Dinleyicisi (KALDIRILDI)
+  // dailyRewardBtn.addEventListener('click', claimDailyReward);
+  // YENİ v3.0: Seviye Atlama Modalı Kapatma
+  levelUpCloseBtn.addEventListener('click', hideLevelUpModal);
+
+  document.getElementById('wrongHistoryCloseBtn').addEventListener('click', () => {
+      document.getElementById('wrongHistoryModal').classList.add('hidden');
+  });
+
+  // YENİ v3.0: HATA DÜZELTMESİ - Tema değiştirici artık arka planı GÜVENLE günceller
+  themeSelector.addEventListener('change', (e) => {
+      setTheme(e.target.value);
+      // initMathSymbols(25); // Buradan kaldırıldı, setTheme içine alındı
+  });
+
+  gamePageBtn.addEventListener('click', () => { 
+      if (gameState.running) {
+          endGame('Oyun durduruldu.');
+      }
+      showPage('game'); 
+  });
+
+
+  // Başlangıç
+  loadProfile(); // Profili, temaları, günlük ödülü yükle
+  
+  const savedTheme = localStorage.getItem('mathThemeV3.0') || 'light';
+  setTheme(savedTheme); // Temayı ayarla (ve sembolleri tetikle)
+  
+  // DÜZENLEME: Başlangıçta ana sayfayı göster ve footer'ı ayarla
+  showPage('home');
+  
+</script>
+</body>
+</html>
