@@ -152,6 +152,15 @@
       <p>Oyun kariyerindeki ilerlemeni burada takip edebilirsin.</p>
     </div>
 
+    <div class="card center" style="margin-bottom: 20px;">
+      <h3>Kullanıcı Adı Belirle</h3>
+      <p>Liderlik tablosunda görünecek adını belirle (Boş bırakırsan e-posta adın kullanılır):</p>
+      <input type="text" id="customUsernameInput" placeholder="Kullanıcı Adın" maxlength="15" style="padding: 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--input-bg); color: var(--text); margin-bottom: 10px; width: 100%; max-width: 300px;">
+      <br>
+      <button onclick="saveCustomUsername()">Kaydet</button>
+      <div id="usernameMsg" style="color: var(--good); margin-top: 5px; font-weight: bold; display: none;">Kaydedildi!</div>
+    </div>
+
     <div class="card">
        
         <h3>Genel İlerleme</h3>
@@ -181,11 +190,23 @@
     </div>
   </div>
 
-  <!-- YENİ v3.0: Liderlik Tablosu Sayfası -->
+  <!-- YENİ v3.1: Liderlik Tablosu Sayfası (Çeşitlendirilmiş) -->
   <div id="leaderboard" class="hidden">
     <div class="card center">
       <h2>🏆 Küresel Liderlik Tablosu</h2>
-      <p>En yüksek skor yapan oyuncular burada listelenir.</p>
+      <p>Farklı kategorilerde en çok doğru yapan oyuncular.</p>
+      <div style="margin-top: 15px;">
+        <label style="font-weight: bold; margin-right: 10px;">Sıralama Kategorisi:</label>
+        <select id="leaderboardCategory" onchange="changeLeaderboardCategory()" style="padding: 8px; border-radius: 5px; background: var(--input-bg); color: var(--text); border: 1px solid var(--border);">
+          <option value="totalCorrect">Genel Doğru Sayısı</option>
+          <option value="addCorrect">Toplama Ustaları</option>
+          <option value="subCorrect">Çıkarma Ustaları</option>
+          <option value="mulCorrect">Çarpma Ustaları</option>
+          <option value="divCorrect">Bölme Ustaları</option>
+          <option value="blitzCorrect">Blitz Modu Rekorları</option>
+          <option value="survivalCorrect">Hayatta Kalma Rekorları</option>
+        </select>
+      </div>
     </div>
     <div class="card">
       <div id="leaderboardList" style="display:flex; flex-direction:column; gap:10px;">

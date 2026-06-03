@@ -119,21 +119,47 @@ function loadProfileFromFirebase(uid) {
     }).catch(err => console.error("Firebase veri çekme hatası:", err));
 }
 
+let currentLeaderboardCategory = "totalCorrect";
+
+function changeLeaderboardCategory() {
+    const sel = document.getElementById("leaderboardCategory");
+    if(sel) {
+        currentLeaderboardCategory = sel.value;
+        updateLeaderboard();
+    }
+}
+
 function updateLeaderboard() {
     if(!database) return;
-    database.ref('leaderboard').orderByChild('score').limitToLast(10).on('value', snapshot => {
+    
+    // score'a göre değil, seçili kategoriye göre sırala
+    database.ref('leaderboard').orderByChild(currentLeaderboardCategory).limitToLast(10).on('value', snapshot => {
         const list = [];
         snapshot.forEach(child => {
             list.push(child.val());
         });
-        list.reverse(); // En yüksek puan en üstte
+        list.reverse(); // En yüksek puan/doğru en üstte
         
         const lbList = document.getElementById("leaderboardList");
+        if(!lbList) return;
         lbList.innerHTML = "";
         if(list.length === 0) {
             lbList.innerHTML = "<p>Henüz kimse skor kaydetmedi.</p>";
             return;
         }
+        
+        const categoryLabels = {
+            totalCorrect: "Toplam Doğru",
+            addCorrect: "Toplama Doğrusu",
+            subCorrect: "Çıkarma Doğrusu",
+            mulCorrect: "Çarpma Doğrusu",
+            divCorrect: "Bölme Doğrusu",
+            blitzCorrect: "Blitz Doğrusu",
+            survivalCorrect: "Hayatta Kalma Doğrusu",
+            score: "Skor"
+        };
+        const label = categoryLabels[currentLeaderboardCategory] || "Doğru";
+
         list.forEach((entry, index) => {
             const div = document.createElement('div');
             div.className = "history-item";
@@ -141,9 +167,13 @@ function updateLeaderboard() {
             div.style.justifyContent = "space-between";
             let rank = index + 1;
             let icon = rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : "🎖️";
+            
+            // Eğer eski veri ise undefined olabilir, 0 yap
+            let val = entry[currentLeaderboardCategory] || 0;
+            
             div.innerHTML = `
                 <div style="font-weight: bold; font-size: 16px; color: var(--accent);">${icon} ${entry.username} (Seviye ${entry.level || 1})</div>
-                <div style="font-weight: bold;">Skor: ${entry.score}</div>
+                <div style="font-weight: bold;">${label}: ${val}</div>
             `;
             lbList.appendChild(div);
         });
@@ -244,6 +274,7 @@ let survivalWrongPenalty = 2;
 let xp = 0;
 let level = 1;
 let streakShields = 0;
+let customUsername = "";
 
 // YENİ v3.0: Tema Sahipliği - Tüm temalar ücretsiz
 let ownedThemes = ['light', 'dark', 'matrix', 'retro', 'gold', 'arctic', 'cyberpunk', 'sakura', 'summer'];
@@ -367,7 +398,7 @@ function startQuickGame(mode) {
 function saveProfile() {
     const dataToSave = { 
         wallet, lives, hints, badges, gameStats, isSoundEnabled, itemsPurchased,
-        xp, level, streakShields, ownedThemes, doubleWalletTurns, skipTokens
+        xp, level, streakShields, ownedThemes, doubleWalletTurns, skipTokens, customUsername
     };
     
     // Yerel Kayıt
@@ -376,13 +407,21 @@ function saveProfile() {
     // Firebase Kaydı
     if (currentUser && database) {
         database.ref('users/' + currentUser.uid).set(dataToSave).catch(err => console.error(err));
-        if(gameStats.maxScore > 0) {
-            database.ref('leaderboard/' + currentUser.uid).set({
-                username: currentUser.displayName || currentUser.email.split('@')[0],
-                score: gameStats.maxScore,
-                level: level
-            }).catch(err => console.error(err));
-        }
+        
+        // Yenilenmiş Liderlik Tablosu Verisi
+        let displayName = customUsername || currentUser.displayName || currentUser.email.split('@')[0];
+        database.ref('leaderboard/' + currentUser.uid).set({
+            username: displayName,
+            score: gameStats.maxScore || 0,
+            level: level,
+            totalCorrect: gameStats.totalCorrect || 0,
+            addCorrect: gameStats.addCorrect || 0,
+            subCorrect: gameStats.subCorrect || 0,
+            mulCorrect: gameStats.mulCorrect || 0,
+            divCorrect: gameStats.divCorrect || 0,
+            blitzCorrect: gameStats.blitzCorrect || 0,
+            survivalCorrect: gameStats.survivalCorrect || 0
+        }).catch(err => console.error(err));
     }
 }
 
@@ -398,6 +437,11 @@ function applyProfileData(p) {
     level = p.level || 1;
     streakShields = p.streakShields || 0;
     doubleWalletTurns = p.doubleWalletTurns || 0;
+    customUsername = p.customUsername || "";
+    
+    if(document.getElementById("customUsernameInput")) {
+        document.getElementById("customUsernameInput").value = customUsername;
+    }
 
     // Tüm temalar ücretsiz
     ownedThemes = ['light', 'dark', 'matrix', 'retro', 'gold', 'arctic', 'cyberpunk', 'sakura', 'summer'];
@@ -444,6 +488,20 @@ function loadProfileFromLocal() {
 
 function loadProfile() {
     loadProfileFromLocal();
+}
+
+function saveCustomUsername() {
+    const input = document.getElementById("customUsernameInput");
+    if(input) {
+        customUsername = input.value.trim();
+        saveProfile();
+        const msg = document.getElementById("usernameMsg");
+        if(msg) {
+            msg.style.display = "block";
+            setTimeout(() => { msg.style.display = "none"; }, 3000);
+        }
+        updateLeaderboard();
+    }
 }
 
 function resetProfile() {
