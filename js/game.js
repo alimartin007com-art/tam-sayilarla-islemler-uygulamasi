@@ -228,6 +228,7 @@ export function nextQuestion() {
 
     State.gameState.asked++; 
     const prob = MathLogic.makeProblem(); 
+    State.setCurrentProblem(prob);
     UI.equationEl.innerHTML = prob.text; 
     UI.answerInput.value = ""; 
     UI.resultEl.textContent = ""; 
