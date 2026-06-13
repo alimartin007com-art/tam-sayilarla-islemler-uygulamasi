@@ -192,6 +192,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Başlangıç işlemleri
     loadProfile();
     
+    // Service Worker Kaydı (PWA Desteği)
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js').then(registration => {
+                console.log('SW registered: ', registration);
+            }).catch(registrationError => {
+                console.log('SW registration failed: ', registrationError);
+            });
+        });
+    }
+
     // Auth Listener
     FirebaseModule.initFirebase((user) => {
         const authBtn = document.getElementById('authBtn');
