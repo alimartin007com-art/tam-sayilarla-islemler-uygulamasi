@@ -39,7 +39,11 @@ export function applyProfileData(p) {
     if (p.xp !== undefined) State.setXP(p.xp);
     if (p.level !== undefined) State.setLevel(p.level);
     if (p.streakShields !== undefined) State.setStreakShields(p.streakShields);
-    if (p.ownedThemes) State.setOwnedThemes(p.ownedThemes);
+    if (p.ownedThemes) {
+        // Eski profildeki temaları mevcut varsayılan temalarla birleştir (kayıp tema olmaması için)
+        const merged = [...new Set([...State.ownedThemes, ...p.ownedThemes])];
+        State.setOwnedThemes(merged);
+    }
     if (p.badges) {
         for (const key in p.badges) {
             if (State.badges[key]) {
@@ -192,17 +196,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Başlangıç işlemleri
     loadProfile();
     
-    // Service Worker Kaydı (PWA Desteği)
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('./sw.js').then(registration => {
-                console.log('SW registered: ', registration);
-            }).catch(registrationError => {
-                console.log('SW registration failed: ', registrationError);
-            });
-        });
-    }
-
     // Auth Listener
     FirebaseModule.initFirebase((user) => {
         const authBtn = document.getElementById('authBtn');
@@ -232,6 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const savedTheme = localStorage.getItem('mathThemeV3.0') || 'light';
+    UI.updateThemeSelectorUI();
     UI.setTheme(savedTheme);
 
     UI.showPage('home', Game.endGame);

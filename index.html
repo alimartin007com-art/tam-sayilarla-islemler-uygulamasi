@@ -3,17 +3,12 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<meta name="theme-color" content="#2c3e50" />
 <title>Tam Sayılarla İşlemler - Eğlenceli Matematik Oyunu</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
-<link rel="apple-touch-icon" href="icon.svg">
-<link rel="manifest" href="manifest.json">
 
 <!-- SEO & Open Graph Meta Etiketleri -->
 <meta name="description" content="Temel matematik işlemlerini eğlenerek öğren! Puan kazan, seviye atla, rozetleri topla ve liderlik tablosuna gir." />
 <meta name="keywords" content="matematik, oyun, tam sayılar, eğitici oyun, matematik oyunu, firebase" />
 <meta name="author" content="Ali Ensar" />
-<meta name="robots" content="index, follow" />
 
 <meta property="og:title" content="🎮 EMO v3.0 - Eğlenceli Matematik Oyunu" />
 <meta property="og:description" content="Matematik işlemlerini eğlenerek pekiştir! Seviye atla, mağazadan eşya al ve arkadaşlarını geç!" />
@@ -21,9 +16,6 @@
 <meta property="og:url" content="https://alimartin007com-art.github.io/tam-sayilarla-islemler-uygulamasi/" />
 <meta property="og:image" content="https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=1200&q=80" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="🎮 EMO v3.0 - Eğlenceli Matematik Oyunu" />
-<meta name="twitter:description" content="Matematik işlemlerini eğlenerek pekiştir! Seviye atla, mağazadan eşya al ve arkadaşlarını geç!" />
-<meta name="twitter:image" content="https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=1200&q=80" />
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -55,6 +47,7 @@
     <button id="shopBtn" class="secondary" onclick="openShop()">🛒 Mağaza</button>
     <button id="soundToggleBtn" class="secondary">🔊 Ses Açık</button>
     <button id="authBtn" class="secondary" onclick="openAuthModal()">👤 Giriş Yap</button>
+    <span id="userStatus" style="display:none; color: var(--text); font-weight: bold; font-size: 14px;"></span>
     <button onclick="showPage('leaderboard')">🏆 Sıralama</button>
     
     <select id="themeSelector" title="Tema Seç">
